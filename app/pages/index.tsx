@@ -53,11 +53,7 @@ const UserInfo = () => {
 }
 
 const Home: BlitzPage = () => {
-<<<<<<< HEAD
-  const branch = "dev"
-=======
   const branch = "customer-location"
->>>>>>> 95626a2 (Init customer and location)
   return (
     <div className="container">
       <main>
