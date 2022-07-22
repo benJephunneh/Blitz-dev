@@ -53,7 +53,11 @@ const UserInfo = () => {
 }
 
 const Home: BlitzPage = () => {
+<<<<<<< HEAD
   const branch = "dev"
+=======
+  const branch = "customer-location"
+>>>>>>> 95626a2 (Init customer and location)
   return (
     <div className="container">
       <main>
@@ -95,11 +99,11 @@ blitz generate all location \\
   number:int \\
   street \\
   city \\
-  state \\
-  zipcode:int(5) \\
+  state:string:default="FL" \\
+  zipcode:int \\
   block:string? \\
   lot:int? \\
-  parcel:string? \\
+  parcel:string?:unique \\
   --parent=customer \\
   belongsTo:customer
             `.trim()}
