@@ -1,0 +1,50 @@
+{
+  "name": "scratchpad",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "blitz dev",
+    "build": "blitz build",
+    "start": "blitz start",
+    "studio": "blitz prisma studio",
+    "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "prepare": "husky install"
+  },
+  "prisma": {
+    "schema": "db/schema.prisma"
+  },
+  "prettier": {
+    "semi": false,
+    "printWidth": 100
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "@hookform/resolvers": "2.x",
+    "@prisma/client": "4.1.0",
+    "blitz": "latest",
+    "react": "18.0.0",
+    "react-dom": "18.0.0",
+    "react-hook-form": "7.x",
+    "react-syntax-highlighter": "15.5.0",
+    "zod": "3.x"
+  },
+  "devDependencies": {
+    "@types/preview-email": "2.x",
+    "@types/react": "18.0.1",
+    "eslint": "7.x",
+    "husky": "7.x",
+    "lint-staged": "11.x",
+    "prettier": "2.x",
+    "prettier-plugin-prisma": "3.x",
+    "pretty-quick": "3.x",
+    "preview-email": "3.x",
+    "prisma": "4.1.0",
+    "typescript": "~4.5"
+  },
+  "private": true
+}
