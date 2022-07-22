@@ -58,7 +58,8 @@ const UserInfo = () => {
 }
 
 const Home: BlitzPage = () => {
-  const branch = "dev"
+  const branch = "layout"
+
   return (
     <div className="container">
       <main>
