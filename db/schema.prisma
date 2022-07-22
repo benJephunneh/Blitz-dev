@@ -16,7 +16,11 @@ model User {
   id             Int      @id @default(autoincrement())
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+<<<<<<< HEAD
   username       String   @unique
+=======
+  name           String   @unique
+>>>>>>> 2ea7813 (Initialize chakra)
   email          String   @unique
   hashedPassword String?
   role           String   @default("Tech")

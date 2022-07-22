@@ -23,7 +23,10 @@ describe("forgotPassword mutation", () => {
     // Create test user
     const user = await db.user.create({
       data: {
+<<<<<<< HEAD
         username: "example",
+=======
+>>>>>>> 2ea7813 (Initialize chakra)
         email: "user@example.com",
         tokens: {
           // Create old token to ensure it's deleted

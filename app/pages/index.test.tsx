@@ -14,7 +14,11 @@ test.skip("renders blitz documentation link", () => {
   // This is an example on how to mock api hooks when testing
   mockUseCurrentUser.mockReturnValue({
     id: 1,
+<<<<<<< HEAD
     username: "User",
+=======
+    name: "User",
+>>>>>>> 2ea7813 (Initialize chakra)
     email: "user@email.com",
     role: "user",
   })

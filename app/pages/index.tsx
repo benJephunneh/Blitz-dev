@@ -54,7 +54,7 @@ const UserInfo = () => {
 }
 
 const Home: BlitzPage = () => {
-  const branch = "master/dev"
+  const branch = "master/dev/chakra"
 
   return (
     <div className="container">
@@ -289,7 +289,11 @@ blitz generate all location \\
           background: #fafafa;
           border-radius: 5px;
           padding: 0.75rem;
+<<<<<<< HEAD
           text-align: left;
+=======
+          text-align: center;
+>>>>>>> 2ea7813 (Initialize chakra)
         }
 
         code {
