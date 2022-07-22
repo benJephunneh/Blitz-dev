@@ -1,9 +1,10 @@
 import { Suspense } from "react"
-import { Image, Link, BlitzPage, useMutation, Routes } from "blitz"
+import { Image, Link, BlitzPage, useMutation, Routes, useSession } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import logout from "app/auth/mutations/logout"
-import logo from "public/logo.png"
+import blitzLogo from "public/logo.png"
+import abstLogo from "public/abst logo.png"
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter"
 import { github } from "react-syntax-highlighter/dist/cjs/styles/hljs"
 
@@ -11,6 +12,10 @@ import { github } from "react-syntax-highlighter/dist/cjs/styles/hljs"
  * This file is just for a pleasant getting started page for your new app.
  * You can delete everything in here and start from scratch if you like.
  */
+
+function useIsSignedIn() {
+  return !!useSession().userId
+}
 
 const UserInfo = () => {
   const currentUser = useCurrentUser()
@@ -58,7 +63,7 @@ const Home: BlitzPage = () => {
     <div className="container">
       <main>
         <div className="logo">
-          <Image src={logo} alt="blitzjs" />
+          <Image src={abstLogo} alt="Apalachee Backhoe & Septic Tank, LLC" />
         </div>
         <p>
           <strong>Congrats!</strong> Your app is ready, including user sign-up and log-in. <br />
@@ -211,8 +216,8 @@ model Location (
           min-height: 100vh;
           display: flex;
           flex-direction: column;
-          justify-content: center;
-          align-items: center;
+          justify-content: left;
+          align-items: left;
         }
 
         main {
@@ -343,6 +348,6 @@ model Location (
 }
 
 Home.suppressFirstRenderFlicker = true
-Home.getLayout = (page) => <Layout title="Home">{page}</Layout>
+Home.getLayout = (page) => <Layout title="Apalachee Septic Tank and Backhoe, LLC">{page}</Layout>
 
 export default Home
