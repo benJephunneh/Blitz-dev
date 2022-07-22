@@ -1,3 +1,15 @@
+import { Link, useRouter } from "blitz"
+import { useState, useEffect } from "react"
+import { FaGithub, FaHeart } from "react-icons/fa"
+import { FiArrowUpRight } from "react-icons/fi"
+import { HiExternalLink } from "react-icons/hi"
+import { useIsDesktop } from "../hooks/useIsDesktop"
+import Banner from "./Banner"
+import ColoredLogo from "./ColoredLogo"
+import { DarkModeToggle } from "./DarkModeToggle"
+import Logo from "./Logo"
+import { NavLink } from "./NavLink"
+
 const SocialIcons = ({ className, variant }) => {
   const outerClasses = variant === "bright" ? "bg-purple-light dark:bg-white" : "bg-white"
   const innerClasses =
@@ -17,6 +29,21 @@ const SocialIcons = ({ className, variant }) => {
     </div>
   )
 }
+
+const bannerMsg = (
+  <div>
+    🚀
+    <a
+      href="https://flightcontrol.dev?ref=blitzjs"
+      rel="noreferrer"
+      target="_blank"
+      className="underline"
+    >
+      Announcing Flightcontrol
+    </a>{" "}
+    - Easily Deploy Blitz.js and Next.js to AWS 🚀
+  </div>
+)
 
 const Header = ({
   className = "",
@@ -95,20 +122,6 @@ const Header = ({
               )
             })}
           </div>
-          <div className="flex lg:text-base xl:space-x-4">
-            <Search className="self-center" />
-            <button
-              onClick={onToggle}
-              className="p-2 transition-opacity rounded-md lg:hidden focus:ring-2 focus:outline-none focus:ring-inset focus:ring-white"
-            >
-              {isOpen ? <AiOutlineClose size="1.375rem" /> : <AiOutlineMenu size="1.375rem" />}
-            </button>
-            <DarkModeToggle className="hidden text-base lg:my-2 lg:block" />
-            <SocialIcons
-              className="hidden lg:flex"
-              variant={useColoredLogo ? "bright" : "normal"}
-            />
-          </div>
         </div>
         {isOpen && (
           <div
@@ -141,7 +154,10 @@ const Header = ({
             </div>
             <div className="space-y-3">
               <DarkModeToggle className="text-lg -ml-3" />
-              <SocialIcons variant={useColoredLogo ? "bright" : "normal"} />
+              <SocialIcons
+                className="hidden lg:flex"
+                variant={useColoredLogo ? "bright" : "normal"}
+              />
             </div>
           </div>
         )}
