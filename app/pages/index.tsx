@@ -53,7 +53,7 @@ const UserInfo = () => {
 }
 
 const Home: BlitzPage = () => {
-  const branch = "tailwind"
+  const branch = "add-banner"
   return (
     <div className="container">
       <main>
