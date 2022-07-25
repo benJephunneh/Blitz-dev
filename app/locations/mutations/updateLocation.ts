@@ -4,7 +4,11 @@ import { z } from "zod"
 
 const UpdateLocation = z.object({
   id: z.number(),
-  name: z.string(),
+  number: z.number(),
+  street: z.string(),
+  city: z.string(),
+  state: z.string(),
+  zipcode: z.number(),
 })
 
 export default resolver.pipe(
