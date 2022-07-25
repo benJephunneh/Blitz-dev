@@ -4,6 +4,7 @@ import Layout from "app/core/layouts/Layout"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import logout from "app/auth/mutations/logout"
 import logo from "public/logo.png"
+import abstLogo from "public/abst Logo.png"
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter"
 import { github } from "react-syntax-highlighter/dist/cjs/styles/hljs"
 
@@ -52,14 +53,36 @@ const UserInfo = () => {
   }
 }
 
+const Logo = () => {
+  const currentUser = useCurrentUser()
+
+  if (currentUser) {
+    return (
+      <>
+        <div className="logo">
+          <Image src={abstLogo} alt="ABST logo" />
+        </div>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <div className="logo">
+          <Image src={logo} alt="Blitz logo" />
+        </div>
+      </>
+    )
+  }
+}
+
 const Home: BlitzPage = () => {
-  const branch = "tailwind"
+  const branch = "master/dev/tailwind/banner"
   return (
     <div className="container">
       <main>
-        <div className="logo">
-          <Image src={logo} alt="blitzjs" />
-        </div>
+        <Suspense fallback="Logging in...">
+          <Logo />
+        </Suspense>
         <p>
           <strong>Congrats!</strong> Your app is ready, including user sign-up and log-in. <br />
           This is the <strong>{branch}</strong> branch.
@@ -70,18 +93,16 @@ const Home: BlitzPage = () => {
           </Suspense>
         </div>
         <p>
-          <strong>
-            To add a new model to your app, <br />
-            run the following in your terminal:
-          </strong>
+          To <strong>add a new model to your app</strong>,
+          <br /> run the following in your terminal:
         </p>
         <div>
           <SyntaxHighlighter
             language="bash"
             style={github}
-            className="rounded-lg border text-md sm:text-lg border-gray-100"
+            className="rounded-lg border text-md sm:text-sm border-gray-200"
             customStyle={{
-              padding: "1em",
+              padding: "0.5em",
             }}
           >
             {`
@@ -97,9 +118,9 @@ blitz generate all customer \\
           <SyntaxHighlighter
             language="bash"
             style={github}
-            className="rounded-lg border text-md sm:text-lg border-gray-100"
+            className="rounded-lg border text-md sm:text-sm border-gray-200"
             customStyle={{
-              padding: "1em",
+              padding: "0.5em",
             }}
           >
             {`
@@ -124,11 +145,20 @@ blitz generate all location \\
         </div>
         <div>
           <p>
-            Then <strong>restart the server</strong>
+            Then <strong>restart the server:</strong>
           </p>
-          <pre>
-            <code>blitz dev</code>
-          </pre>
+          <SyntaxHighlighter
+            language="bash"
+            style={github}
+            className="rounded-lg border text-md sm:text-sm border-gray-200"
+            customStyle={{
+              padding: "0.5em",
+            }}
+          >
+            {`
+blitz dev
+`.trim()}
+          </SyntaxHighlighter>
           <p>
             and go to{" "}
             <Link href="/customers">
