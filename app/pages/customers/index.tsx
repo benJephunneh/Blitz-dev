@@ -23,7 +23,9 @@ export const CustomersList = () => {
         {customers.map((customer) => (
           <li key={customer.id}>
             <Link href={Routes.ShowCustomerPage({ customerId: customer.id })}>
-              <a>{customer.name}</a>
+              <a>
+                {customer.firstname} {customer.lastname}
+              </a>
             </Link>
           </li>
         ))}
