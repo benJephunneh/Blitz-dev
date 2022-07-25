@@ -89,14 +89,27 @@ blitz generate all customer \\
   firstname \\
   lastname \\
   locations:Location[]
-
+            `.trim()}
+          </SyntaxHighlighter>
+        </div>
+        <div style={{ marginBottom: "1rem" }}>(Select No to skip running prisma migrate)</div>
+        <div>
+          <SyntaxHighlighter
+            language="bash"
+            style={github}
+            className="rounded-lg border text-md sm:text-lg border-gray-100"
+            customStyle={{
+              padding: "1em",
+            }}
+          >
+            {`
 blitz generate all location \\
   primary:boolean:default=true \\
   number:int \\
   street \\
   city \\
-  state \\
-  zipcode:int(5) \\
+  state:string:default="FL" \\
+  zipcode:int \\
   block:string? \\
   lot:int? \\
   parcel:string? \\
@@ -105,31 +118,7 @@ blitz generate all location \\
             `.trim()}
           </SyntaxHighlighter>
         </div>
-        <div style={{ marginBottom: "1rem" }}>(Select No to skip running prisma migrate)</div>
-        <p>
-          Add relation in <code>schema.prisma:</code>
-        </p>
-        <SyntaxHighlighter
-          language="bash"
-          style={github}
-          className="rounded-lg border text-md sm:text-lg border-gray-100"
-          customStyle={{
-            padding: "1em",
-          }}
-        >
-          {`
-model Customer (
-  ...
-  locations Location[]
-)
-
-model Location (
-  ...
-  customer Customer relation(fields: [customerId], references: [id])
-  customerId Int
-)
-`.trim()}
-        </SyntaxHighlighter>
+        <div style={{ marginBottom: "1rem" }}>(Select Yes to run prisma migrate)</div>
         <div style={{ marginBottom: "1rem" }}>
           (Now run <code>blitz prisma migrate dev</code>)
         </div>
