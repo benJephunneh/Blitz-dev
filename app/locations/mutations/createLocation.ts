@@ -3,7 +3,11 @@ import db from "db"
 import { z } from "zod"
 
 const CreateLocation = z.object({
-  name: z.string(),
+  number: z.number(),
+  street: z.string(),
+  city: z.string(),
+  state: z.string(),
+  zipcode: z.number(),
   customerId: z.number(),
 })
 
