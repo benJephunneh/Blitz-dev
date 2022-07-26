@@ -93,6 +93,7 @@ const Home: BlitzPage = () => {
                   setNavIsOpen(isOpen)
                 }}
                 hasLightBg={true}
+                stickyBgClass={false}
               />
             </div>
           </div>
