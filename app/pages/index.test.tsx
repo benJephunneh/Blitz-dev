@@ -15,12 +15,6 @@ test.skip("renders blitz documentation link", () => {
   mockUseCurrentUser.mockReturnValue({
     id: 1,
     username: "User",
-<<<<<<< HEAD
-=======
-    name: "User",
->>>>>>> 2ea7813 (Initialize chakra)
-=======
->>>>>>> 41e6de2 (Init chakra-ui recipe)
     email: "user@email.com",
     role: "user",
   })
