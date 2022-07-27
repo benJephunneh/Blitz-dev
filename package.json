@@ -34,10 +34,7 @@
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-hook-form": "7.x",
-<<<<<<< HEAD
     "react-syntax-highlighter": "15.5.0",
-=======
->>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa
     "zod": "3.x"
   },
   "devDependencies": {

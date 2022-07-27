@@ -3,15 +3,9 @@ import db from "db"
 import { Login } from "../validations"
 import { Role } from "types"
 
-<<<<<<< HEAD
 export const authenticateUser = async (rawUsername: string, rawPassword: string) => {
   const { username, password } = Login.parse({ username: rawUsername, password: rawPassword })
   const user = await db.user.findFirst({ where: { username } })
-=======
-export const authenticateUser = async (rawName: string, rawPassword: string) => {
-  const { name, password } = Login.parse({ name: rawName, password: rawPassword })
-  const user = await db.user.findFirst({ where: { name } })
->>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa
   if (!user) throw new AuthenticationError()
 
   const result = await SecurePassword.verify(user.hashedPassword, password)
@@ -26,15 +20,9 @@ export const authenticateUser = async (rawName: string, rawPassword: string) => 
   return rest
 }
 
-<<<<<<< HEAD
 export default resolver.pipe(resolver.zod(Login), async ({ username, password }, ctx) => {
   // This throws an error if credentials are invalid
   const user = await authenticateUser(username, password)
-=======
-export default resolver.pipe(resolver.zod(Login), async ({ name, password }, ctx) => {
-  // This throws an error if credentials are invalid
-  const user = await authenticateUser(name, password)
->>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa
 
   await ctx.session.$create({ userId: user.id, role: user.role as Role })
 

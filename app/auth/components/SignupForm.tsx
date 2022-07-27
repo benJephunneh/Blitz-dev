@@ -1,14 +1,6 @@
 import { useMutation } from "blitz"
-<<<<<<< HEAD
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import signup from "app/auth/mutations/signup"
-=======
-import { LabeledTextField } from "app/core/components/LabeledTextField"
-import { Form, FORM_ERROR } from "app/core/components/Form"
-import signup from "app/auth/mutations/signup"
-import { Signup } from "app/auth/validations"
-import React from "react"
->>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa
 import { useForm } from "react-hook-form"
 
 type SignupFormProps = {
@@ -22,11 +14,7 @@ export const SignupForm = (props: SignupFormProps) => {
     handleSubmit,
     formState: { errors },
   } = useForm()
-<<<<<<< HEAD
   console.log(errors)
-=======
-  // const onSubmit = (data) => console.log(data)
->>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa
 
   const onSubmit = async (values) => {
     try {
@@ -36,20 +24,14 @@ export const SignupForm = (props: SignupFormProps) => {
       if (error.code === "P2002" && error.meta?.target?.includes("email")) {
         // This error comes from Prisma
         return { email: "This email is already being used" }
-<<<<<<< HEAD
       } else if (error.code === "P2002" && error.meta?.target?.includes("username")) {
         // This error comes from Prisma
         return { email: "This username is already being used" }
-=======
-      } else if (error.code === "P2002" && error.meta?.target?.includes("name")) {
-        return { name: "This username is already being used" }
->>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa
       } else {
         return { [FORM_ERROR]: error.toString() }
       }
     }
   }
-<<<<<<< HEAD
 
   return (
     <div>
@@ -81,30 +63,6 @@ export const SignupForm = (props: SignupFormProps) => {
 
 export default SignupForm
 
-=======
-  console.log(errors)
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input type="text" placeholder="Username" {...register("name", { required: true })} />
-      <input
-        type="password"
-        placeholder="Password"
-        {...register("password", { required: true, min: 10 })}
-      />
-      <input type="email" placeholder="Email" {...register("email", { required: true })} />
-      <select {...register("role", { required: true })}>
-        <option value="Owner">Owner</option>
-        <option value="Admin">Admin</option>
-        <option value="Tech">Tech</option>
-      </select>
-
-      <input type="submit" />
-    </form>
-  )
-}
-
->>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa
 /*
 export const SignupForm = (props: SignupFormProps) => {
   const [signupMutation] = useMutation(signup)
@@ -138,8 +96,3 @@ export const SignupForm = (props: SignupFormProps) => {
   )
 }
 */
-<<<<<<< HEAD
-=======
-
-export default SignupForm
->>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa
