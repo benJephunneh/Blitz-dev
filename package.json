@@ -24,9 +24,9 @@
     ]
   },
   "dependencies": {
-    "@chakra-ui/react": "1.8.8",
-    "@emotion/react": "11.9.3",
-    "@emotion/styled": "11.9.3",
+    "@chakra-ui/react": "latest",
+    "@emotion/react": "latest",
+    "@emotion/styled": "latest",
     "@hookform/resolvers": "2.x",
     "@prisma/client": "4.1.0",
     "blitz": "latest",
