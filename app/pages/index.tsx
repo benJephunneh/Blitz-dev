@@ -6,6 +6,7 @@ import logout from "app/auth/mutations/logout"
 import logo from "public/logo.png"
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter"
 import { github } from "react-syntax-highlighter/dist/cjs/styles/hljs"
+import Logo from "app/core/components/Logo"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -57,9 +58,9 @@ const Home: BlitzPage = () => {
   return (
     <div className="container">
       <main>
-        <div className="logo">
-          <Image src={logo} alt="blitzjs" />
-        </div>
+        <Suspense fallback="Logging in...">
+          <Logo />
+        </Suspense>
         <p>
           <strong>Congrats!</strong> Your app is ready, including user sign-up and log-in. <br />
           This is the <strong>{branch}</strong> branch.
