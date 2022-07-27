@@ -54,6 +54,7 @@ const UserInfo = () => {
 
 const Home: BlitzPage = () => {
   const branch = "dev"
+
   return (
     <div className="container">
       <main>
@@ -287,7 +288,11 @@ blitz generate all location \\
           background: #fafafa;
           border-radius: 5px;
           padding: 0.75rem;
+<<<<<<< HEAD
           text-align: left;
+=======
+          text-align: center;
+>>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa
         }
 
         code {

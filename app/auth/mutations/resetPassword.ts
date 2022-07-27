@@ -8,6 +8,7 @@ export class ResetPasswordError extends Error {
   message = "Reset password link is invalid or it has expired."
 }
 
+<<<<<<< HEAD
 export default resolver.pipe(
   resolver.zod(ResetPassword),
   async ({ username, password, token }, ctx) => {
@@ -48,3 +49,42 @@ export default resolver.pipe(
     return true
   }
 )
+=======
+export default resolver.pipe(resolver.zod(ResetPassword), async ({ password, token }, ctx) => {
+  // 1. Try to find this token in the database
+  const hashedToken = hash256(token)
+  const possibleToken = await db.token.findFirst({
+    where: { hashedToken, type: "RESET_PASSWORD" },
+    include: { user: true },
+  })
+
+  // 2. If token not found, error
+  if (!possibleToken) {
+    throw new ResetPasswordError()
+  }
+  const savedToken = possibleToken
+
+  // 3. Delete token so it can't be used again
+  await db.token.delete({ where: { id: savedToken.id } })
+
+  // 4. If token has expired, error
+  if (savedToken.expiresAt < new Date()) {
+    throw new ResetPasswordError()
+  }
+
+  // 5. Since token is valid, now we can update the user's password
+  const hashedPassword = await SecurePassword.hash(password.trim())
+  const user = await db.user.update({
+    where: { id: savedToken.userId },
+    data: { hashedPassword },
+  })
+
+  // 6. Revoke all existing login sessions for this user
+  await db.session.deleteMany({ where: { userId: user.id } })
+
+  // 7. Now log the user in with the new credentials
+  await login({ name: user.name, password }, ctx)
+
+  return true
+})
+>>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa

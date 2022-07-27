@@ -26,7 +26,10 @@ describe("resetPassword mutation", () => {
 
     const user = await db.user.create({
       data: {
+<<<<<<< HEAD
         username: "exampleName",
+=======
+>>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa
         email: "user@example.com",
         tokens: {
           // Create old token to ensure it's deleted
@@ -53,33 +56,45 @@ describe("resetPassword mutation", () => {
 
     // Non-existent token
     await expect(
+<<<<<<< HEAD
       resetPassword(
         { token: "no-token", username: "", password: "", passwordConfirmation: "" },
         mockCtx
       )
+=======
+      resetPassword({ token: "no-token", password: "", passwordConfirmation: "" }, mockCtx)
+>>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa
     ).rejects.toThrowError()
 
     // Expired token
     await expect(
       resetPassword(
+<<<<<<< HEAD
         {
           token: expiredToken,
           username: user.username,
           password: newPassword,
           passwordConfirmation: newPassword,
         },
+=======
+        { token: expiredToken, password: newPassword, passwordConfirmation: newPassword },
+>>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa
         mockCtx
       )
     ).rejects.toThrowError()
 
     // Good token
     await resetPassword(
+<<<<<<< HEAD
       {
         token: goodToken,
         username: user.username,
         password: newPassword,
         passwordConfirmation: newPassword,
       },
+=======
+      { token: goodToken, password: newPassword, passwordConfirmation: newPassword },
+>>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa
       mockCtx
     )
 

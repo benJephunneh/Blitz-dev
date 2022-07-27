@@ -38,8 +38,13 @@ export const LoginForm = (props: LoginFormProps) => {
     <div>
       <h1>Login</h1>
 
+<<<<<<< HEAD
       <Form onSubmit={handleSubmit(onSubmit)}>
         <input type="text" placeholder="Username" {...register("username", { required: true })} />
+=======
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input type="text" placeholder="Username" {...register("name", { required: true })} />
+>>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa
         <input
           type="password"
           placeholder="Password"
@@ -47,7 +52,11 @@ export const LoginForm = (props: LoginFormProps) => {
         />
 
         <input type="submit" />
+<<<<<<< HEAD
       </Form>
+=======
+      </form>
+>>>>>>> 2ea781347c4590e1f45c6ee1ac8baef075b9d7aa
 
       <div style={{ marginTop: "1rem" }}>
         Or <Link href={Routes.SignupPage()}>Sign Up</Link>
