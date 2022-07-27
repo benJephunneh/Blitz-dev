@@ -1,14 +1,12 @@
-import { Suspense } from "react"
-import { Image, Link, BlitzPage, useMutation, Routes } from "blitz"
-import Layout from "app/core/layouts/Layout"
-import { useCurrentUser } from "app/core/hooks/useCurrentUser"
-import logout from "app/auth/mutations/logout"
-import logo from "public/logo.png"
-import abstLogo from "public/abst Logo.png"
+import { Suspense, useState } from "react"
+import { Link, BlitzPage, useMutation, Routes } from "blitz"
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter"
 import { github } from "react-syntax-highlighter/dist/cjs/styles/hljs"
 import { Header } from "app/core/components/Header"
-import { useState } from "react"
+import logout from "app/auth/mutations/logout"
+import Logo from "app/core/components/Logo"
+import { useCurrentUser } from "app/core/hooks/useCurrentUser"
+import Layout from "app/core/layouts/Layout"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -55,58 +53,19 @@ const UserInfo = () => {
   }
 }
 
-const Logo = () => {
-  const currentUser = useCurrentUser()
-
-  if (currentUser) {
-    return (
-      <>
-        <div className="logo">
-          <Image src={abstLogo} alt="ABST logo" />
-        </div>
-      </>
-    )
-  } else {
-    return (
-      <>
-        <div className="logo">
-          <Image src={logo} alt="Blitz logo" />
-        </div>
-      </>
-    )
-  }
-}
-
 const Home: BlitzPage = () => {
-  const [navIsOpen, setNavIsOpen] = useState(false)
-  const branch = "master/dev/tailwind/banner"
+  const bannerMsg = "master/dev/tailwind/banner"
 
   return (
-    <div>
-      <div className="overflow-hidden">
-        <div>
-          <div className="relative pb-1 md:pb-3 gap-y-24 xl:gap-y-44">
-            <div className="z-30 text-white col-span-full">
-              <Header
-                className="px-6 mx-auto max-w-7xl"
-                onNavToggle={(isOpen) => {
-                  setNavIsOpen(isOpen)
-                }}
-                hasLightBg={true}
-                stickyBgClass={false}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="container">
+    <>
+      <Header bannerMsg={bannerMsg} className="" />
+      <div>
         <main>
           <Suspense fallback="Logging in...">
             <Logo />
           </Suspense>
           <p>
             <strong>Congrats!</strong> Your app is ready, including user sign-up and log-in. <br />
-            This is the <strong>{branch}</strong> branch.
           </p>
           <div className="buttons" style={{ marginTop: "1rem", marginBottom: "1rem" }}>
             <Suspense fallback="Logging in...">
@@ -379,7 +338,7 @@ const Home: BlitzPage = () => {
           }
         `}</style>
       </div>
-    </div>
+    </>
   )
 }
 
