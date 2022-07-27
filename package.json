@@ -34,10 +34,12 @@
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-hook-form": "7.x",
-<<<<<<< HEAD
     "react-syntax-highlighter": "15.5.0",
+<<<<<<< HEAD
 =======
 >>>>>>> 2ea7813 (Initialize chakra)
+=======
+>>>>>>> 41e6de2 (Init chakra-ui recipe)
     "zod": "3.x"
   },
   "devDependencies": {
