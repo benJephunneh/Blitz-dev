@@ -7,9 +7,20 @@ import logout from "app/auth/mutations/logout"
 import logo from "public/logo.png"
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter"
 import { github } from "react-syntax-highlighter/dist/cjs/styles/hljs"
-import { Code, Container, Flex, Heading, HStack, Stack, Text, VStack } from "@chakra-ui/react"
+import {
+  Button,
+  Code,
+  Container,
+  Flex,
+  Heading,
+  HStack,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react"
 import { Image } from "blitz"
 import abstIcon from "public/abst icon.png"
+import ChakraLogin from "app/auth/pages/login-chakra"
 
 const links = [
   {
@@ -38,18 +49,17 @@ const UserInfo = () => {
     return (
       <>
         <HStack>
-          <button
-            className="button small"
+          <Button
             onClick={async () => {
               await logoutMutation()
             }}
           >
             Logout
-          </button>
+          </Button>
           <div>
-            User: <code>{currentUser.username}</code>
+            <strong>User:</strong> <code>{currentUser.username}</code>
             <br />
-            Role: <code>{currentUser.role}</code>
+            <strong>Role:</strong> <code>{currentUser.role}</code>
           </div>
         </HStack>
         <pre>{JSON.stringify(currentUser)}</pre>
@@ -64,7 +74,7 @@ const UserInfo = () => {
               <strong>Sign Up</strong>
             </a>
           </Link>
-          <Link href={Routes.LoginPage()}>
+          <Link href={Routes.ChakraLoginPage()}>
             <a className="button small">
               <strong>Login</strong>
             </a>
@@ -77,7 +87,7 @@ const UserInfo = () => {
 
 const Home: BlitzPage = () => {
   const branch = "master/dev/chakra/chakra-header"
-  const currentUser = useCurrentUser()
+  // const currentUser = useCurrentUser()
 
   return (
     <Container maxWidth="container.xl" padding={4}>
@@ -111,6 +121,7 @@ const Home: BlitzPage = () => {
         <VStack width="full" height="full" padding={10} spacing={10} alignItems="flex-start">
           <Suspense fallback="Logging in...">
             <UserInfo />
+            {/*<ChakraLogin />*/}
           </Suspense>
         </VStack>
         <VStack

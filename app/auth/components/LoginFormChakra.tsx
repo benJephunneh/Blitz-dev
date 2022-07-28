@@ -1,16 +1,24 @@
 import { AuthenticationError, Link, useMutation, Routes, PromiseReturnType } from "blitz"
-import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import login from "app/auth/mutations/login"
 import { Login } from "app/auth/validations"
 import { useForm } from "react-hook-form"
-import { Heading } from "@chakra-ui/react"
+import {
+  FormControl,
+  FormLabel,
+  Grid,
+  GridItem,
+  Heading,
+  Input,
+  SimpleGrid,
+  VStack,
+} from "@chakra-ui/react"
 
 type LoginFormProps = {
   onSuccess?: (user: PromiseReturnType<typeof login>) => void
 }
 
-export const LoginForm = (props: LoginFormProps) => {
+const LoginFormChakra = (props: LoginFormProps) => {
   const [loginMutation] = useMutation(login)
   const {
     register,
@@ -36,24 +44,35 @@ export const LoginForm = (props: LoginFormProps) => {
   console.log(errors)
 
   return (
-    <div>
-      <Heading size="lg">Login</Heading>
-
+    <>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" placeholder="Username" {...register("username", { required: true })} />
-        <input
-          type="password"
-          placeholder="Password"
-          {...register("password", { required: true })}
-        />
+        <VStack w="full" h="full" p={10} spacing={2} alignItems="flex-start">
+          <Heading size="lg">Login</Heading>
 
-        <input type="submit" />
+          <SimpleGrid columns={2} columnGap={2} rowGap={2} w="full">
+            <GridItem colSpan={1}>
+              <FormControl>
+                <FormLabel>Username</FormLabel>
+                <Input placeholder="yousername" {...register("username", { required: true })} />
+              </FormControl>
+            </GridItem>
+            <GridItem colSpan={1}>
+              <FormControl>
+                <FormLabel>Password</FormLabel>
+                <Input type="password" {...register("password", { required: true })} />
+              </FormControl>
+            </GridItem>
+            <GridItem colSpan={2}>
+              <Input type="submit" />
+            </GridItem>
+          </SimpleGrid>
+        </VStack>
       </Form>
 
       <div style={{ marginTop: "1rem" }}>
         Or <Link href={Routes.SignupPage()}>Sign Up</Link>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -102,4 +121,4 @@ export const LoginForm = (props: LoginFormProps) => {
 }
 */
 
-export default LoginForm
+export default LoginFormChakra
