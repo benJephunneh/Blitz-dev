@@ -15,7 +15,7 @@ const Logo = () => {
     )
   } else {
     return (
-      <Box boxSize="100px" objectFit="cover">
+      <Box boxSize="50px" objectFit="cover">
         <Image src={blitzLogo} alt="Blitz.js logo" />
       </Box>
     )
