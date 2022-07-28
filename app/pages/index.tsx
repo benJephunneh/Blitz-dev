@@ -7,17 +7,9 @@ import logout from "app/auth/mutations/logout"
 import logo from "public/logo.png"
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter"
 import { github } from "react-syntax-highlighter/dist/cjs/styles/hljs"
-import {
-  Code,
-  Container,
-  Flex,
-  Heading,
-  HStack,
-  Image,
-  Stack,
-  Text,
-  VStack,
-} from "@chakra-ui/react"
+import { Code, Container, Flex, Heading, HStack, Stack, Text, VStack } from "@chakra-ui/react"
+import { Image } from "blitz"
+import abstIcon from "public/abst icon.png"
 
 const links = [
   {
@@ -117,7 +109,9 @@ const Home: BlitzPage = () => {
       </VStack>
       <Flex height="50vh" paddingY={20}>
         <VStack width="full" height="full" padding={10} spacing={10} alignItems="flex-start">
-          <UserInfo />
+          <Suspense fallback="Logging in...">
+            <UserInfo />
+          </Suspense>
         </VStack>
         <VStack
           width="full"
@@ -127,16 +121,20 @@ const Home: BlitzPage = () => {
           alignItems="flex-start"
           background="gray.50"
         >
-          {currentUser &&
-            links.map((link) => {
-              return (
-                <Suspense key={link.name} fallback="Loading...">
-                  <Link href={link.href}>
-                    <a>{link.name}</a>
-                  </Link>
-                </Suspense>
-              )
-            })}
+          {/*
+          <Suspense fallback="Logging in...">
+            {currentUser &&
+              links.map((link) => {
+                return (
+                  <Suspense key={link.name} fallback="Loading...">
+                    <Link href={link.href}>
+                      <a>{link.name}</a>
+                    </Link>
+                  </Suspense>
+                )
+              })}
+          </Suspense>
+          */}
         </VStack>
       </Flex>
       {/*

@@ -9,13 +9,13 @@ const Logo = () => {
 
   if (currentUser) {
     return (
-      <Box boxSize="50px">
+      <Box boxSize={50}>
         <Image src={abstIcon} alt="ABST icon" />
       </Box>
     )
   } else {
     return (
-      <Box boxSize="50px" objectFit="cover">
+      <Box boxSize={100}>
         <Image src={blitzLogo} alt="Blitz.js logo" />
       </Box>
     )
