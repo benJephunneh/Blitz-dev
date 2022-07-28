@@ -1,5 +1,5 @@
 import { Suspense } from "react"
-import { Link, BlitzPage, useMutation, Routes } from "blitz"
+import { Link, BlitzPage, useMutation, Routes, useSession } from "blitz"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import Logo from "app/core/components/Logo"
 import Layout from "app/core/layouts/Layout"
@@ -42,6 +42,10 @@ const UserInfo = () => {
   const currentUser = useCurrentUser()
   const [logoutMutation] = useMutation(logout)
 
+  // const session = useSession({ suspense: true })
+  // const isLoggedIn = !!session.userId
+
+  // if (isLoggedIn) {
   if (currentUser) {
     return (
       <>
@@ -85,7 +89,9 @@ const UserInfo = () => {
 
 const Home: BlitzPage = () => {
   const branch = "master/dev/chakra/chakra-header"
-  const currentUser = useCurrentUser()
+
+  const session = useSession({ suspense: false })
+  const isLoggedIn = !!session.userId
 
   return (
     <Container maxWidth="container.xl" padding={4}>
@@ -117,7 +123,9 @@ const Home: BlitzPage = () => {
       </VStack>
       <Flex height="50vh" paddingY={20}>
         <VStack width="full" height="full" padding={10} spacing={10} alignItems="flex-start">
-          <UserInfo />
+          <Suspense>
+            <UserInfo />
+          </Suspense>
         </VStack>
         <VStack
           width="full"
@@ -127,16 +135,15 @@ const Home: BlitzPage = () => {
           alignItems="flex-start"
           background="gray.50"
         >
-          {currentUser &&
-            links.map((link) => {
-              return (
-                <Suspense key={link.name} fallback="Loading...">
-                  <Link href={link.href}>
-                    <a>{link.name}</a>
-                  </Link>
-                </Suspense>
-              )
-            })}
+          {links.map((link) => {
+            return (
+              <Suspense key={link.name} fallback="Loading...">
+                <Link href={link.href}>
+                  <a>{link.name}</a>
+                </Link>
+              </Suspense>
+            )
+          })}
         </VStack>
       </Flex>
       <div className="container">
