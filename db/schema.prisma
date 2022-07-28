@@ -20,6 +20,8 @@ model User {
   email          String   @unique
   hashedPassword String?
   role           String   @default("Tech")
+  avatarId       String?
+  avatarVersion  Int?
 
   tokens   Token[]
   sessions Session[]

@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react"
 import { useRouter } from "blitz"
 import { FC, useEffect } from "react"
+import Navigation from "app/core/components/Navigation"
 
 type HeaderDrawerProps = {
   isOpen: boolean
