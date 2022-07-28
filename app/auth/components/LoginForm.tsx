@@ -17,19 +17,24 @@ export const LoginForm = (props: LoginFormProps) => {
     formState: { errors },
   } = useForm()
 
+  const handleError = (error: any) => {
+    if (error instanceof AuthenticationError) {
+      return {
+        [FORM_ERROR]: "Email or password is incorrect.",
+      }
+    } else {
+      return {
+        [FORM_ERROR]: "Something went wrong: " + error.toString(),
+      }
+    }
+  }
+
   const onSubmit = async (values) => {
     try {
       const user = await loginMutation(values)
       props.onSuccess?.(user)
-    } catch (error: any) {
-      if (error instanceof AuthenticationError) {
-        return { [FORM_ERROR]: "Sorry, those credentials are invalid" }
-      } else {
-        return {
-          [FORM_ERROR]:
-            "Sorry, we had an unexpected error. Please try again. - " + error.toString(),
-        }
-      }
+    } catch (error) {
+      return handleError(error)
     }
   }
   console.log(errors)
