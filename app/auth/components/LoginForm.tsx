@@ -4,13 +4,16 @@ import { Form, FORM_ERROR } from "app/core/components/Form"
 import login from "app/auth/mutations/login"
 import { Login } from "app/auth/validations"
 import { useForm } from "react-hook-form"
+import { FC } from "react"
+import { Input } from "@chakra-ui/react"
 
 type LoginFormProps = {
   onSuccess?: (user: PromiseReturnType<typeof login>) => void
 }
 
-export const LoginForm = (props: LoginFormProps) => {
+export const LoginForm: FC<LoginFormProps> = ({ onSuccess }) => {
   const [loginMutation] = useMutation(login)
+
   const {
     register,
     handleSubmit,
@@ -24,7 +27,7 @@ export const LoginForm = (props: LoginFormProps) => {
       }
     } else {
       return {
-        [FORM_ERROR]: "Something went wrong: " + error.toString(),
+        [FORM_ERROR]: "Something wint rong: " + error.toString(),
       }
     }
   }
@@ -32,7 +35,7 @@ export const LoginForm = (props: LoginFormProps) => {
   const onSubmit = async (values) => {
     try {
       const user = await loginMutation(values)
-      props.onSuccess?.(user)
+      onSuccess?.(user)
     } catch (error) {
       return handleError(error)
     }
@@ -40,24 +43,15 @@ export const LoginForm = (props: LoginFormProps) => {
   console.log(errors)
 
   return (
-    <div>
-      <h1>Login</h1>
-
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" placeholder="Username" {...register("username", { required: true })} />
-        <input
-          type="password"
-          placeholder="Password"
-          {...register("password", { required: true })}
-        />
-
-        <input type="submit" />
-      </Form>
-
-      <div style={{ marginTop: "1rem" }}>
-        Or <Link href={Routes.SignupPage()}>Sign Up</Link>
-      </div>
-    </div>
+    <Form
+      schema={Login}
+      initialValues={{ username: "", password: "" }}
+      submitText="Log in"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Input placeholder="Username" {...register("username", { required: true })} />
+      <Input type="password" placeholder="Password" {...register("password", { required: true })} />
+    </Form>
   )
 }
 
