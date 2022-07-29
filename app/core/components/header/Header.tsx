@@ -3,7 +3,9 @@ import { useSession } from "blitz"
 import { useState } from "react"
 import HeaderActions from "./HeaderActions"
 import HeaderDrawer from "./HeaderDrawer"
+import HeaderLogIn from "./HeaderLogIn"
 import HeaderLogo from "./HeaderLogo"
+import HeaderLogOut from "./HeaderLogOut"
 
 const Header = () => {
   const session = useSession({ suspense: false })

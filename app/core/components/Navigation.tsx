@@ -7,12 +7,12 @@ import { IconType } from "react-icons"
 import { FcHome } from "react-icons/fc"
 
 type NavigationItemProps = {
-  children: ReactNode
   route: RouteUrlObject
   icon: IconType
+  children?: ReactNode
 }
 
-const NavigationItem: FC<NavigationItemProps> = ({ children, icon, route }) => {
+const NavigationItem: FC<NavigationItemProps> = ({ route, icon, children }) => {
   const router = useRouter()
   const isActive = router.pathname === route.pathname
 

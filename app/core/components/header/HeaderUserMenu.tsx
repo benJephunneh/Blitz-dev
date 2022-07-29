@@ -3,7 +3,6 @@ import {
   Button,
   Fade,
   Icon,
-  Link,
   Menu,
   MenuButton,
   MenuItem,
@@ -14,15 +13,15 @@ import {
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import { FaChevronDown, FaCog, FaSignOutAlt, FaUser } from "react-icons/fa"
 import avatar from "public/Yangshuo.jpg"
-import { Routes, useMutation } from "blitz"
+import { Link, Routes, useMutation } from "blitz"
 import logoutMutation from "app/auth/mutations/logout"
 import { Suspense } from "react"
 
-const UserMenuLoader = () => {
-  ;<Button size="sm" variant="ghost" px={1} rightIcon={<FaChevronDown />}>
+const UserMenuLoader = () => (
+  <Button size="sm" variant="ghost" px={1} rightIcon={<FaChevronDown />}>
     <SkeletonCircle size="6" />
   </Button>
-}
+)
 
 const UserMenuButton = () => {
   return (
@@ -58,11 +57,6 @@ const HeaderUserMenu = () => {
               </MenuItem>
             </Link>
           )}
-          <Link href={Routes.PreferencesPage()} passHref>
-            <MenuItem as="a" icon={<FaCog />}>
-              My preferences
-            </MenuItem>
-          </Link>
           <MenuItem
             as="button"
             onClick={() =>
