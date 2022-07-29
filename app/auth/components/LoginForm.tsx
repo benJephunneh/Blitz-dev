@@ -5,13 +5,13 @@ import login from "app/auth/mutations/login"
 import { Login } from "app/auth/validations"
 import { useForm } from "react-hook-form"
 import { FC } from "react"
-import { Input } from "@chakra-ui/react"
+import { Button, Input, VStack } from "@chakra-ui/react"
 
 type LoginFormProps = {
   onSuccess?: (user: PromiseReturnType<typeof login>) => void
 }
 
-export const LoginForm: FC<LoginFormProps> = ({ onSuccess }) => {
+const LoginForm: FC<LoginFormProps> = ({ onSuccess }) => {
   const [loginMutation] = useMutation(login)
 
   const {
@@ -31,6 +31,7 @@ export const LoginForm: FC<LoginFormProps> = ({ onSuccess }) => {
       }
     }
   }
+  console.log(errors)
 
   const onSubmit = async (values) => {
     try {
@@ -40,18 +41,21 @@ export const LoginForm: FC<LoginFormProps> = ({ onSuccess }) => {
       return handleError(error)
     }
   }
-  console.log(errors)
 
   return (
-    <Form
-      schema={Login}
-      initialValues={{ username: "", password: "" }}
-      submitText="Log in"
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <Input placeholder="Username" {...register("username", { required: true })} />
-      <Input type="password" placeholder="Password" {...register("password", { required: true })} />
-    </Form>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <VStack w="full">
+        <Input placeholder="Username" {...register("username", { required: true })} />
+        <Input
+          type="password"
+          placeholder="Password"
+          {...register("password", { required: true })}
+        />
+        <Button type="submit" w="full" bg="green.200">
+          Do it
+        </Button>
+      </VStack>
+    </form>
   )
 }
 

@@ -1,4 +1,4 @@
-import resetPassword from "./resetPassword"
+import changePassword from "./changePassword"
 import db from "db"
 import { hash256, SecurePassword } from "blitz"
 
@@ -12,7 +12,7 @@ const mockCtx: any = {
   },
 }
 
-describe("resetPassword mutation", () => {
+describe("changePassword mutation", () => {
   it("works correctly", async () => {
     expect(true).toBe(true)
 
@@ -53,7 +53,7 @@ describe("resetPassword mutation", () => {
 
     // Non-existent token
     await expect(
-      resetPassword(
+      changePassword(
         { token: "no-token", username: "", password: "", passwordConfirmation: "" },
         mockCtx
       )
@@ -61,7 +61,7 @@ describe("resetPassword mutation", () => {
 
     // Expired token
     await expect(
-      resetPassword(
+      changePassword(
         {
           token: expiredToken,
           username: user.username,
@@ -73,7 +73,7 @@ describe("resetPassword mutation", () => {
     ).rejects.toThrowError()
 
     // Good token
-    await resetPassword(
+    await changePassword(
       {
         token: goodToken,
         username: user.username,

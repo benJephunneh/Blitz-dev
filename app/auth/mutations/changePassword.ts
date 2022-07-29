@@ -1,29 +1,49 @@
-import { NotFoundError, SecurePassword, resolver, AuthenticationError } from "blitz"
+import { resolver, SecurePassword, hash256 } from "blitz"
 import db from "db"
-import { authenticateUser } from "./login"
 import { ChangePassword } from "../validations"
+import login from "./login"
+
+export class ChangePasswordError extends Error {
+  name = "ChangePasswordError"
+  message = "Change password link is invalid or it has expired."
+}
 
 export default resolver.pipe(
   resolver.zod(ChangePassword),
-  resolver.authorize(),
-  async ({ currentPassword, newPassword }, ctx) => {
-    const user = await db.user.findFirst({ where: { id: ctx.session.userId! } })
-    if (!user) throw new NotFoundError()
+  async ({ username, password, token }, ctx) => {
+    // 1. Try to find this token in the database
+    const hashedToken = hash256(token)
+    const possibleToken = await db.token.findFirst({
+      where: { hashedToken, type: "RESET_PASSWORD" },
+      include: { user: true },
+    })
 
-    try {
-      await authenticateUser(user.username, currentPassword)
-    } catch (error: any) {
-      if (error instanceof AuthenticationError) {
-        throw new Error("Invalid Password")
-      }
-      throw error
+    // 2. If token not found, error
+    if (!possibleToken) {
+      throw new ChangePasswordError()
+    }
+    const savedToken = possibleToken
+
+    // 3. Delete token so it can't be used again
+    await db.token.delete({ where: { id: savedToken.id } })
+
+    // 4. If token has expired, error
+    if (savedToken.expiresAt < new Date()) {
+      throw new ChangePasswordError()
     }
 
-    const hashedPassword = await SecurePassword.hash(newPassword.trim())
-    await db.user.update({
-      where: { id: user.id },
+    // 5. Since token is valid, now we can update the user's password
+    const hashedPassword = await SecurePassword.hash(password.trim())
+    const user = await db.user.update({
+      where: { id: savedToken.userId },
       data: { hashedPassword },
     })
+
+    // 6. Revoke all existing login sessions for this user
+    await db.session.deleteMany({ where: { userId: user.id } })
+
+    // 7. Now log the user in with the new credentials
+    await login({ username: user.username, password }, ctx)
 
     return true
   }

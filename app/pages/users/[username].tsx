@@ -13,27 +13,34 @@ import {
   useParam,
   useRouter,
 } from "blitz"
+import { Suspense } from "react"
 
 const ProfilePage: BlitzPage = () => {
   // const router = useRouter()
   const username = useParam("username", "string")
-  const currentUser = useCurrentUser()
+  const currentUser = useCurrentUser({ suspense: true })
 
   return (
-    <VStack w="full" h="full" p={10} spacing={10} alignItems="flex-start">
+    <VStack w="500px" h="100vh" p={10} spacing={10} alignItems="flex-start" justify="left">
       <Heading size="lg" alignItems="center">
         {username}
       </Heading>
-      <SimpleGrid columns={2} columnGap={3} rowGap={6} w="full">
-        <GridItem colSpan={1}>
-          <Text fontSize="md">{currentUser!.email}</Text>
+      <SimpleGrid row={1} columnGap={3} w="full">
+        <GridItem>
+          <Suspense>
+            <Link href={`mailto:${currentUser!.email}`} passHref>
+              <Text as="a" fontSize="lg">
+                {`${currentUser!.email}`}
+              </Text>
+            </Link>
+          </Suspense>
         </GridItem>
-        <GridItem colSpan={1}>
-          <Text fontSize="md" fontStyle="italic">
+        <GridItem>
+          <Text fontSize="lg" fontStyle="bold">
             {currentUser!.role}
           </Text>
         </GridItem>
-        <GridItem colSpan={2}>
+        <GridItem>
           <Link href={Routes.Home()} passHref>
             <Button as="a" w="full">
               Return home
