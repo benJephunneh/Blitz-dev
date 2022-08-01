@@ -19,7 +19,7 @@ const ProfilePage: BlitzPage = () => {
         <GridItem>
           <Link href={`mailto:${currentUser!.email}`} passHref>
             <Text as="a" fontSize="lg" fontStyle="italic">
-              {`${currentUser.email}`}
+              {`${currentUser!.email}`}
             </Text>
           </Link>
         </GridItem>
