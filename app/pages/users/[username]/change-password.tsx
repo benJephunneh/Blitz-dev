@@ -4,8 +4,6 @@ import { Stack, useToast } from "@chakra-ui/react"
 import ChangePasswordForm from "app/users/components/ChangePasswordForm"
 import PrefetchQueryClient from "app/core/helpers/PrefetchQueryClient"
 import profileQuery from "app/users/queries/getUserProfile"
-import getCurrentUser from "app/users/queries/getCurrentUser"
-import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 
 const ChangePasswordPage: BlitzPage = () => {
   const router = useRouter()
@@ -52,6 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 export default ChangePasswordPage
 
 // ChangePasswordPage.redirectAuthenticatedTo = Routes.ProfilePage({ user.username })
+ChangePasswordPage.authenticate = { redirectTo: Routes.LoginPage() }
 ChangePasswordPage.getLayout = (page) => (
   <BoxLayout title="Change password" description="">
     {page}

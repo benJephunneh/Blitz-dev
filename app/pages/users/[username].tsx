@@ -3,12 +3,21 @@ import PrefetchQueryClient from "app/core/helpers/PrefetchQueryClient"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import PlainLayout from "app/core/layouts/PlainLayout"
 import profileQuery from "app/users/queries/getUserProfile"
-import { BlitzPage, GetServerSideProps, Link, NotFoundError, Routes, useParam } from "blitz"
-import { Suspense } from "react"
+import {
+  BlitzPage,
+  GetServerSideProps,
+  Link,
+  NotFoundError,
+  Routes,
+  useParam,
+  useSession,
+} from "blitz"
 
 const ProfilePage: BlitzPage = () => {
   const username = useParam("username", "string")
-  const currentUser = useCurrentUser({ suspense: false })
+  const currentUser = useCurrentUser({ suspense: true })
+  const session = useSession({ suspense: false })
+  const isLoggedIn = !!session.userId
 
   return (
     <VStack w="500px" h="100vh" p={10} spacing={10} alignItems="flex-start" justify="left">
@@ -50,6 +59,7 @@ const ProfilePage: BlitzPage = () => {
 }
 
 ProfilePage.getLayout = (page) => <PlainLayout>{page}</PlainLayout>
+ProfilePage.authenticate = { redirectTo: Routes.LoginPage() }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const client = new PrefetchQueryClient(ctx)
