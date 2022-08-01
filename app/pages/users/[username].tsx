@@ -1,22 +1,12 @@
 import { Button, GridItem, Heading, SimpleGrid, Text, VStack } from "@chakra-ui/react"
-import PrefetchQueryClient from "app/core/helpers/prefetchQueryClient"
+import PrefetchQueryClient from "app/core/helpers/PrefetchQueryClient"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import PlainLayout from "app/core/layouts/PlainLayout"
-import getCurrentUser from "app/users/queries/getCurrentUser"
 import profileQuery from "app/users/queries/getUserProfile"
-import {
-  BlitzPage,
-  GetServerSideProps,
-  Link,
-  NotFoundError,
-  Routes,
-  useParam,
-  useRouter,
-} from "blitz"
+import { BlitzPage, GetServerSideProps, Link, NotFoundError, Routes, useParam } from "blitz"
 import { Suspense } from "react"
 
 const ProfilePage: BlitzPage = () => {
-  // const router = useRouter()
   const username = useParam("username", "string")
   const currentUser = useCurrentUser({ suspense: true })
 
@@ -29,7 +19,7 @@ const ProfilePage: BlitzPage = () => {
         <GridItem>
           <Suspense>
             <Link href={`mailto:${currentUser!.email}`} passHref>
-              <Text as="a" fontSize="lg">
+              <Text as="a" fontSize="lg" fontStyle="italic">
                 {`${currentUser!.email}`}
               </Text>
             </Link>
@@ -39,6 +29,13 @@ const ProfilePage: BlitzPage = () => {
           <Text fontSize="lg" fontStyle="bold">
             {currentUser!.role}
           </Text>
+        </GridItem>
+        <GridItem>
+          <Link href={Routes.ChangePasswordPage({ username })} passHref>
+            <Button as="a" w="full" bg="green.100">
+              Change password
+            </Button>
+          </Link>
         </GridItem>
         <GridItem>
           <Link href={Routes.Home()} passHref>

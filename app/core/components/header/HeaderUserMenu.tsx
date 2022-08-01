@@ -8,6 +8,7 @@ import {
   MenuItem,
   MenuList,
   SkeletonCircle,
+  Text,
   useToast,
 } from "@chakra-ui/react"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
@@ -57,20 +58,17 @@ const HeaderUserMenu = () => {
               </MenuItem>
             </Link>
           )}
-          <MenuItem
-            as="button"
-            onClick={() =>
-              logout().then(() =>
-                toast({
-                  title: "You've been logged out",
-                  status: "success",
-                })
-              )
-            }
-            icon={<FaSignOutAlt />}
-          >
-            Log out
-          </MenuItem>
+          <Link href={Routes.Home()}>
+            <MenuItem
+              as="a"
+              icon={<FaSignOutAlt />}
+              onClick={() =>
+                logout().then(() => toast({ title: "You've been logged out.", status: "success" }))
+              }
+            >
+              Log out
+            </MenuItem>
+          </Link>
         </MenuList>
       </Menu>
     </Suspense>

@@ -1,15 +1,15 @@
 import { resolver, SecurePassword, hash256 } from "blitz"
 import db from "db"
-import { ChangePassword } from "../validations"
-import login from "./login"
+import { ResetPassword } from "../validations"
+import login from "../../auth/mutations/login"
 
-export class ChangePasswordError extends Error {
-  name = "ChangePasswordError"
-  message = "Change password link is invalid or it has expired."
+export class ResetPasswordError extends Error {
+  name = "ResetPasswordError"
+  message = "Reset password link is invalid or it has expired."
 }
 
 export default resolver.pipe(
-  resolver.zod(ChangePassword),
+  resolver.zod(ResetPassword),
   async ({ username, password, token }, ctx) => {
     // 1. Try to find this token in the database
     const hashedToken = hash256(token)
@@ -20,7 +20,7 @@ export default resolver.pipe(
 
     // 2. If token not found, error
     if (!possibleToken) {
-      throw new ChangePasswordError()
+      throw new ResetPasswordError()
     }
     const savedToken = possibleToken
 
@@ -29,7 +29,7 @@ export default resolver.pipe(
 
     // 4. If token has expired, error
     if (savedToken.expiresAt < new Date()) {
-      throw new ChangePasswordError()
+      throw new ResetPasswordError()
     }
 
     // 5. Since token is valid, now we can update the user's password
