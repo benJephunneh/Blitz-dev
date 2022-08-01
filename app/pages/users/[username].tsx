@@ -8,7 +8,7 @@ import { Suspense } from "react"
 
 const ProfilePage: BlitzPage = () => {
   const username = useParam("username", "string")
-  const currentUser = useCurrentUser({ suspense: true })
+  const currentUser = useCurrentUser({ suspense: false })
 
   return (
     <VStack w="500px" h="100vh" p={10} spacing={10} alignItems="flex-start" justify="left">
@@ -17,14 +17,13 @@ const ProfilePage: BlitzPage = () => {
       </Heading>
       <SimpleGrid row={1} columnGap={3} w="full">
         <GridItem>
-          <Suspense>
-            <Link href={`mailto:${currentUser!.email}`} passHref>
-              <Text as="a" fontSize="lg" fontStyle="italic">
-                {`${currentUser!.email}`}
-              </Text>
-            </Link>
-          </Suspense>
+          <Link href={`mailto:${currentUser!.email}`} passHref>
+            <Text as="a" fontSize="lg" fontStyle="italic">
+              {`${currentUser.email}`}
+            </Text>
+          </Link>
         </GridItem>
+        {/*
         <GridItem>
           <Text fontSize="lg" fontStyle="bold">
             {currentUser!.role}
@@ -44,6 +43,7 @@ const ProfilePage: BlitzPage = () => {
             </Button>
           </Link>
         </GridItem>
+        */}
       </SimpleGrid>
     </VStack>
   )
