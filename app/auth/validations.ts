@@ -6,6 +6,7 @@ export const email = z
   .string()
   .email()
   .transform((str) => str.toLowerCase().trim())
+// Wonder if .toLowerCase().trim() will be needed.
 
 export const password = z
   .string()

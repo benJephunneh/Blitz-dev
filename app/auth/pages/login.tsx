@@ -1,5 +1,5 @@
 import { useRouter, BlitzPage, Link, Routes } from "blitz"
-import { Button, HStack, Stack, Text, useToast } from "@chakra-ui/react"
+import { Button, Stack, useToast } from "@chakra-ui/react"
 import TextDivider from "app/core/components/TextDivider"
 import LoginForm from "../components/LoginForm"
 import BoxLayout from "app/core/layouts/BoxLayout"
@@ -35,7 +35,7 @@ const LoginPage: BlitzPage = () => {
   )
 }
 
-LoginPage.redirectAuthenticatedTo = "/"
+LoginPage.redirectAuthenticatedTo = Routes.Home()
 LoginPage.getLayout = (page) => (
   <BoxLayout title="Log In" description="Sign in to visualize the effluent.">
     {page}
