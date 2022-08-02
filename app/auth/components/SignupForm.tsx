@@ -34,7 +34,7 @@ export const SignupForm = (props: SignupFormProps) => {
   }
 
   return (
-    <div>
+    <>
       <h1>Create an Account</h1>
 
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -57,7 +57,7 @@ export const SignupForm = (props: SignupFormProps) => {
 
         <input type="submit" />
       </Form>
-    </div>
+    </>
   )
 }
 
