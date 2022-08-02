@@ -1,18 +1,16 @@
 import { Button, Input, Stack, VStack } from "@chakra-ui/react"
-import { Form, FormProps, FORM_ERROR } from "app/core/components/Form"
-import { LabeledTextField } from "app/core/components/LabeledTextField"
+import Form, { FORM_ERROR } from "app/core/components/Form"
 import { PromiseReturnType, useMutation } from "blitz"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 import createCustomer from "../mutations/createCustomer"
 export { FORM_ERROR } from "app/core/components/Form"
 
-type NewCustomerFormProps = {
+type CustomerFormProps = {
   onSuccess?: (customer: PromiseReturnType<typeof createCustomer>) => void
 }
 
 // export function NewCustomerForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
-const NewCustomerForm = (props: NewCustomerFormProps) => {
+const CustomerForm = (props: CustomerFormProps) => {
   const [newCustomerMutation] = useMutation(createCustomer)
   const {
     register,
@@ -38,9 +36,7 @@ const NewCustomerForm = (props: NewCustomerFormProps) => {
 
   return (
     <>
-      <h1>Create new customer</h1>
-
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <VStack w="full">
           <Input placeholder="First name" {...register("firstname", { required: true })} />
           <Input placeholder="Last name" {...register("lastname", { required: true })} />
@@ -48,9 +44,9 @@ const NewCustomerForm = (props: NewCustomerFormProps) => {
             Do it
           </Button>
         </VStack>
-      </form>
+      </Form>
     </>
   )
 }
 
-export default NewCustomerForm
+export default CustomerForm

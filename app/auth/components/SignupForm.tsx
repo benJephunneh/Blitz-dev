@@ -1,14 +1,15 @@
+import { FC } from "react"
 import { PromiseReturnType, useMutation } from "blitz"
-import { FORM_ERROR } from "app/core/components/Form"
-import signup from "app/auth/mutations/signup"
 import { useForm } from "react-hook-form"
 import { Input, Select, VStack } from "@chakra-ui/react"
+import Form, { FORM_ERROR } from "app/core/components/Form"
+import signup from "app/auth/mutations/signup"
 
 type SignupFormProps = {
   onSuccess?: (user: PromiseReturnType<typeof signup>) => void
 }
 
-const SignupForm = (props: SignupFormProps) => {
+const SignupForm: FC<SignupFormProps> = ({ onSuccess }) => {
   const [signupMutation] = useMutation(signup)
   const {
     register,
@@ -32,15 +33,15 @@ const SignupForm = (props: SignupFormProps) => {
   const onSubmit = async (values) => {
     try {
       const user = await signupMutation(values)
-      props.onSuccess?.(user)
-    } catch (error: any) {
+      onSuccess?.(user)
+    } catch (error) {
       return handleError(error)
     }
   }
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <Form submitText="Become one with the effluent" onSubmit={handleSubmit(onSubmit)}>
         <VStack w="full">
           <Input
             placeholder="Username"
@@ -58,7 +59,7 @@ const SignupForm = (props: SignupFormProps) => {
             <option value="Tech">Tech</option>
           </Select>
         </VStack>
-      </form>
+      </Form>
     </>
   )
 }
