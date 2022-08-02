@@ -2,6 +2,7 @@ import { useRouter, BlitzPage, Routes, Link } from "blitz"
 import { Button, Stack, useToast } from "@chakra-ui/react"
 import SignupForm from "../components/SignupForm"
 import BoxLayout from "app/core/layouts/BoxLayout"
+import TextDivider from "app/core/components/TextDivider"
 
 const SignupPage: BlitzPage = () => {
   const router = useRouter()
@@ -20,9 +21,11 @@ const SignupPage: BlitzPage = () => {
         }}
       />
 
-      <Link href={Routes.Home()} passHref>
-        <Button as="a" w="full" bg="green.200">
-          Create user
+      <TextDivider>Or</TextDivider>
+
+      <Link href={Routes.LoginPage()} passHref>
+        <Button as="a" w="full" bg="blue.200">
+          Log in
         </Button>
       </Link>
     </Stack>

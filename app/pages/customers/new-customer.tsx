@@ -1,6 +1,6 @@
 import { Link, useRouter, BlitzPage, Routes } from "blitz"
 import { Stack, useToast } from "@chakra-ui/react"
-import NewCustomerForm from "app/customers/components/NewCustomerForm"
+import CustomerForm from "app/customers/components/CustomerForm"
 import BoxLayout from "app/core/layouts/BoxLayout"
 
 const NewCustomerPage: BlitzPage = () => {
@@ -9,9 +9,9 @@ const NewCustomerPage: BlitzPage = () => {
 
   return (
     <Stack spacing={8}>
-      <h1>Create New Customer</h1>
+      <h1>Create new customer</h1>
 
-      <NewCustomerForm
+      <CustomerForm
         onSuccess={(_customer) => {
           // const next = router.query.next ? decodeURIComponent(router.query.next as string) : "/"
           // router.push(next)
