@@ -3,7 +3,7 @@ import { Head, Link, useRouter, useQuery, useMutation, useParam, BlitzPage, Rout
 import Layout from "app/core/layouts/Layout"
 import getCustomer from "app/customers/queries/getCustomer"
 import updateCustomer from "app/customers/mutations/updateCustomer"
-import NewCustomerForm, { FORM_ERROR } from "app/customers/components/NewCustomerForm"
+import CustomerForm, { FORM_ERROR } from "app/customers/components/CustomerForm"
 // Should probably be an UpdateCustomerForm
 
 export const EditCustomer = () => {
@@ -29,7 +29,7 @@ export const EditCustomer = () => {
         <h1>Edit Customer {customer.id}</h1>
         <pre>{JSON.stringify(customer, null, 2)}</pre>
 
-        <NewCustomerForm
+        <CustomerForm
           submitText="Update Customer"
           // TODO use a zod schema for form validation
           //  - Tip: extract mutation's schema into a shared `validations.ts` file and
