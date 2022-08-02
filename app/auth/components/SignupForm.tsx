@@ -46,13 +46,13 @@ const SignupForm = (props: SignupFormProps) => {
             placeholder="Username"
             {...register("username", { required: true, maxLength: 80 })}
           />
-          <Input type="email" placeholder="email" {...register("email", { required: true })} />
+          <Input type="email" placeholder="Email" {...register("email", { required: true })} />
           <Input
             type="password"
             placeholder="Password"
             {...register("password", { required: true, min: 10 })}
           />
-          <Select {...register("role", { required: true })}>
+          <Select bg="gray.300" defaultValue="Tech" {...register("role", { required: true })}>
             <option value="Owner">Owner</option>
             <option value="Admin">Admin</option>
             <option value="Tech">Tech</option>
