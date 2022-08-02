@@ -40,8 +40,6 @@ const SignupForm = (props: SignupFormProps) => {
 
   return (
     <>
-      <h1>Create an account</h1>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <VStack w="full">
           <Input
@@ -51,7 +49,7 @@ const SignupForm = (props: SignupFormProps) => {
           <Input type="email" placeholder="email" {...register("email", { required: true })} />
           <Input
             type="password"
-            placeholder="password"
+            placeholder="Password"
             {...register("password", { required: true, min: 10 })}
           />
           <Select {...register("role", { required: true })}>

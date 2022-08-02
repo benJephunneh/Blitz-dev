@@ -25,7 +25,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSuccess }) => {
       }
     } else {
       return {
-        [FORM_ERROR]: "Something wint rong: " + error.toString(),
+        [FORM_ERROR]: "Something is knot rite: " + error.toString(),
       }
     }
   }
