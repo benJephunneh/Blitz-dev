@@ -4,6 +4,10 @@ import TextDivider from "app/core/components/TextDivider"
 import LoginForm from "../components/LoginForm"
 import BoxLayout from "app/core/layouts/BoxLayout"
 
+/****
+ * Modify to use Popover
+ */
+
 const LoginPage: BlitzPage = () => {
   const router = useRouter()
   const toast = useToast()

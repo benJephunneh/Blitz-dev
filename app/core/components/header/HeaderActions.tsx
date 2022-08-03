@@ -2,6 +2,7 @@ import {
   Box,
   HStack,
   Icon,
+  IconButton,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -11,8 +12,8 @@ import {
   PopoverTrigger,
   useColorMode,
 } from "@chakra-ui/react"
-import { FC } from "react"
-import { FaBars, FaBuffer, FaGrav, FaMoon, FaSun } from "react-icons/fa"
+import { FC, useState } from "react"
+import { FaBars, FaBuffer, FaGrav, FaMoon, FaSun, FaUsers } from "react-icons/fa"
 import HeaderIconButton from "./HeaderIconButton"
 
 type HeaderActionProps = {
@@ -35,25 +36,30 @@ const HeaderActions: FC<HeaderActionProps> = ({ toggleDrawer, toggleCustomer }) 
         onClick={toggleColorMode}
         icon={<Icon as={colorMode === "dark" ? FaSun : FaMoon} w={5} h={5} />}
       />
+      <Popover placement="bottom-start">
+        <PopoverTrigger>
+          <HeaderIconButton
+            label="asdf"
+            icon={<Icon as={FaUsers} w={5} h={5} />}
+            onClick={toggleCustomer}
+          />
+        </PopoverTrigger>
+        <PopoverContent role="tooltip" mt={10}>
+          <PopoverBody textColor="purple" outlineColor="black">
+            asdf
+          </PopoverBody>
+        </PopoverContent>
+      </Popover>
+
       <HeaderIconButton
         label="Customer menu"
         onClick={toggleCustomer}
         icon={<Icon as={FaGrav} w={5} h={5} /> /* Or FaJenkins */}
       />
-      <Popover>
+      <Popover placement="bottom">
         <PopoverTrigger>
           {/* <Box tabIndex="0" role="button" p={5} w="120px" bg="gray.300" children="Click" /> */}
-          <Icon
-            as={FaGrav}
-            w={5}
-            h={5}
-            tabIndex="0"
-            role="button"
-            p={5}
-            w={30}
-            bg="gray.300"
-            children="Click"
-          />
+          <Icon aria-label="customerButton" onClick={toggleCustomer} as={FaGrav} role="button" />
         </PopoverTrigger>
         <PopoverContent bg="tomato" color="white">
           <PopoverHeader fontWeight="semibold">Customization</PopoverHeader>
