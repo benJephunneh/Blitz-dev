@@ -1,5 +1,5 @@
 import { PromiseReturnType, useMutation } from "blitz"
-import { FORM_ERROR } from "app/core/components/Form"
+import Form, { FORM_ERROR } from "app/core/components/Form"
 import signup from "app/auth/mutations/signup"
 import { useForm } from "react-hook-form"
 import { Input, Select, VStack } from "@chakra-ui/react"
@@ -39,27 +39,25 @@ const SignupForm = (props: SignupFormProps) => {
   }
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <VStack w="full">
-          <Input
-            placeholder="Username"
-            {...register("username", { required: true, maxLength: 80 })}
-          />
-          <Input type="email" placeholder="Email" {...register("email", { required: true })} />
-          <Input
-            type="password"
-            placeholder="Password"
-            {...register("password", { required: true, min: 10 })}
-          />
-          <Select bg="gray.300" defaultValue="Tech" {...register("role", { required: true })}>
-            <option value="Owner">Owner</option>
-            <option value="Admin">Admin</option>
-            <option value="Tech">Tech</option>
-          </Select>
-        </VStack>
-      </form>
-    </>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <VStack w="full">
+        <Input
+          placeholder="Username"
+          {...register("username", { required: true, maxLength: 80 })}
+        />
+        <Input type="email" placeholder="Email" {...register("email", { required: true })} />
+        <Input
+          type="password"
+          placeholder="Password"
+          {...register("password", { required: true, min: 10 })}
+        />
+        <Select bg="gray.300" defaultValue="Tech" {...register("role", { required: true })}>
+          <option value="Owner">Owner</option>
+          <option value="Admin">Admin</option>
+          <option value="Tech">Tech</option>
+        </Select>
+      </VStack>
+    </Form>
   )
 }
 
