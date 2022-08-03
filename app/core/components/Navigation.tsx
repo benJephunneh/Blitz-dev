@@ -86,12 +86,12 @@ const Navigation = () => {
             Home
           </NavigationItem>
         </NavigationSection>
-        {/*
         <NavigationSection title="customers">
-          <NavigationItem route={Routes.CustomerPage()} icon={FcHome}>
-            Home
+          <NavigationItem route={Routes.CustomersPage()} icon={FcHome}>
+            List
           </NavigationItem>
         </NavigationSection>
+        {/*
         <NavigationSection title="locations">
           <NavigationItem route={Routes.LocationPage()} icon={FcHome}>
             Home
