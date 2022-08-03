@@ -4,7 +4,7 @@ import Layout from "app/core/layouts/Layout"
 import getCustomer from "app/customers/queries/getCustomer"
 import updateCustomer from "app/customers/mutations/updateCustomer"
 import { FORM_ERROR } from "app/customers/components/CustomerForm"
-import { CustomerForm } from "app/customers/components/CustomerForm"
+import CustomerForm from "app/customers/components/CustomerForm"
 // Should probably be an UpdateCustomerForm
 
 export const EditCustomer = () => {

@@ -10,7 +10,7 @@ type CustomerFormProps = {
 }
 
 // export function NewCustomerForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
-const CustomerForm = (props: CustomerFormProps) => {
+export const CustomerForm = (props: CustomerFormProps) => {
   const [newCustomerMutation] = useMutation(createCustomer)
   const {
     register,
@@ -48,5 +48,3 @@ const CustomerForm = (props: CustomerFormProps) => {
     </>
   )
 }
-
-export default CustomerForm
