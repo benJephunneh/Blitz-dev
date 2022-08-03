@@ -35,7 +35,7 @@ const Header = () => {
               gap={3}
             >
               <GridItem>
-                <HeaderActions toggleDrawer={toggleDrawer} />
+                <HeaderActions />
               </GridItem>
 
               <GridItem>

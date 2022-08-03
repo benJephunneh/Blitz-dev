@@ -21,7 +21,7 @@ type HeaderActionProps = {
   toggleCustomer: () => void
 }
 
-const HeaderActions: FC<HeaderActionProps> = ({ toggleDrawer, toggleCustomer }) => {
+const HeaderActions: FC<HeaderActionProps> = ({ toggleDrawer }) => {
   const { colorMode, toggleColorMode } = useColorMode()
 
   return (
@@ -38,11 +38,7 @@ const HeaderActions: FC<HeaderActionProps> = ({ toggleDrawer, toggleCustomer }) 
       />
       <Popover placement="bottom-start">
         <PopoverTrigger>
-          <HeaderIconButton
-            label="asdf"
-            icon={<Icon as={FaUsers} w={5} h={5} />}
-            onClick={toggleCustomer}
-          />
+          <HeaderIconButton label="asdf" icon={<Icon as={FaUsers} w={5} h={5} />} />
         </PopoverTrigger>
         <PopoverContent role="tooltip" mt={10}>
           <PopoverBody textColor="purple" outlineColor="black">
@@ -53,13 +49,12 @@ const HeaderActions: FC<HeaderActionProps> = ({ toggleDrawer, toggleCustomer }) 
 
       <HeaderIconButton
         label="Customer menu"
-        onClick={toggleCustomer}
         icon={<Icon as={FaGrav} w={5} h={5} /> /* Or FaJenkins */}
       />
       <Popover placement="bottom">
         <PopoverTrigger>
           {/* <Box tabIndex="0" role="button" p={5} w="120px" bg="gray.300" children="Click" /> */}
-          <Icon aria-label="customerButton" onClick={toggleCustomer} as={FaGrav} role="button" />
+          <Icon aria-label="customerButton" as={FaGrav} role="button" />
         </PopoverTrigger>
         <PopoverContent bg="tomato" color="white">
           <PopoverHeader fontWeight="semibold">Customization</PopoverHeader>
