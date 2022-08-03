@@ -1,20 +1,75 @@
-import { Button, HStack } from "@chakra-ui/react"
-import { Link, Routes } from "blitz"
-import { FaArrowRight } from "react-icons/fa"
+import {
+  Button,
+  Fade,
+  Flex,
+  HStack,
+  Icon,
+  Menu,
+  MenuButton,
+  MenuList,
+  Spacer,
+  Stack,
+  useToast,
+} from "@chakra-ui/react"
+import LoginForm from "app/auth/components/LoginForm"
+import { Link, Routes, useRouter } from "blitz"
+import { Suspense } from "react"
+import { FaArrowRight, FaChevronDown } from "react-icons/fa"
+
+const HeaderLoginButton = () => {
+  return (
+    <Fade in>
+      <MenuButton
+        as={Button}
+        size="sm"
+        variant="ghost"
+        px={1}
+        rightIcon={<Icon pr={1} as={FaChevronDown} />}
+      >
+        Log in
+      </MenuButton>
+    </Fade>
+  )
+}
 
 const HeaderLogIn = () => {
+  const router = useRouter()
+  const toast = useToast()
+  // const session = useSession()
+  // const isLoggedIn = !!session.userId
+  // const isNotLoggedIn = !isLoggedIn
+
   return (
-    <HStack spacing={1} justify="flex-end">
-      <Link href={Routes.LoginPage()} passHref>
-        <Button size="sm" as="a" variant="ghost">
-          Log in
-        </Button>
-      </Link>
-      <Link href={Routes.SignupPage()} passHref>
-        <Button size="sm" as="a" rightIcon={<FaArrowRight />} colorScheme="green">
-          Sign up
-        </Button>
-      </Link>
+    <HStack spacing={0} justify="flex-end">
+      <Suspense fallback="Loading...">
+        <Menu>
+          <HeaderLoginButton />
+
+          <MenuList>
+            <Stack spacing={8} px={2}>
+              <LoginForm
+                onSuccess={(_user) => {
+                  const next = router.query.next
+                    ? decodeURIComponent(router.query.next as string)
+                    : "/"
+                  router.push(next)
+                  toast({
+                    title: `Welcome back, ${_user.username}`,
+                    description: "Log in successful",
+                    status: "success",
+                  })
+                }}
+              >
+                <Link href={Routes.SignupPage()} passHref>
+                  <Button as="a" size="sm" rightIcon={<FaArrowRight />} colorScheme="green">
+                    Sign up
+                  </Button>
+                </Link>
+              </LoginForm>
+            </Stack>
+          </MenuList>
+        </Menu>
+      </Suspense>
     </HStack>
   )
 }

@@ -2,14 +2,15 @@ import { AuthenticationError, Link, useMutation, Routes, PromiseReturnType } fro
 import { FORM_ERROR } from "app/core/components/Form"
 import login from "app/auth/mutations/login"
 import { useForm } from "react-hook-form"
-import { FC } from "react"
-import { Button, Input, VStack } from "@chakra-ui/react"
+import { FC, ReactNode } from "react"
+import { Button, Input, VStack, Text, HStack, SimpleGrid } from "@chakra-ui/react"
 
 type LoginFormProps = {
   onSuccess?: (user: PromiseReturnType<typeof login>) => void
+  children?: ReactNode
 }
 
-const LoginForm: FC<LoginFormProps> = ({ onSuccess }) => {
+const LoginForm: FC<LoginFormProps> = ({ onSuccess, children }) => {
   const [loginMutation] = useMutation(login)
 
   const {
@@ -49,10 +50,13 @@ const LoginForm: FC<LoginFormProps> = ({ onSuccess }) => {
           placeholder="Password"
           {...register("password", { required: true })}
         />
-        <Button type="submit" w="full" bg="green.200">
-          Do it
-        </Button>
       </VStack>
+      <HStack py={2} spacing="auto">
+        <Button type="submit" size="sm" variant="ghost">
+          Log in
+        </Button>
+        {children}
+      </HStack>
     </form>
   )
 }

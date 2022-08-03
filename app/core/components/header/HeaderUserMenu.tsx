@@ -2,6 +2,7 @@ import {
   Avatar,
   Button,
   Fade,
+  VStack,
   Icon,
   Menu,
   MenuButton,
@@ -10,16 +11,20 @@ import {
   SkeletonCircle,
   Text,
   useToast,
+  HStack,
+  Stack,
 } from "@chakra-ui/react"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
-import { FaChevronDown, FaCog, FaSignOutAlt, FaUser } from "react-icons/fa"
+import { FaChevronDown, FaCog, FaSignOutAlt, FaUser, FaUserTie } from "react-icons/fa"
+import { SiSuperuser } from "react-icons/si"
+import { GiExitDoor } from "react-icons/gi"
 import avatar from "public/Yangshuo.jpg"
 import { Link, Routes, useMutation } from "blitz"
 import logoutMutation from "app/auth/mutations/logout"
 import { Suspense } from "react"
 
 const UserMenuLoader = () => (
-  <Button size="sm" variant="ghost" px={1} rightIcon={<FaChevronDown />}>
+  <Button size="sm" variant="ghost" px={1}>
     <SkeletonCircle size="6" />
   </Button>
 )
@@ -34,7 +39,8 @@ const UserMenuButton = () => {
         px={1}
         rightIcon={<Icon pr={1} as={FaChevronDown} />}
       >
-        <Avatar size="xs" src="public/Yangshuo.jpg" />
+        <Icon as={FaUserTie} w={5} h={5} />
+        {/* <Avatar size="xs" src="public/Yangshuo.jpg" /> */}
       </MenuButton>
     </Fade>
   )
@@ -47,28 +53,33 @@ const HeaderUserMenu = () => {
 
   return (
     <Suspense fallback={<UserMenuLoader />}>
-      <Menu>
+      <Menu autoSelect={false}>
         <UserMenuButton />
 
         <MenuList>
-          {currentUser && (
-            <Link href={Routes.ProfilePage({ username: currentUser.username })} passHref>
-              <MenuItem as="a" icon={<FaUser />}>
-                My profile
-              </MenuItem>
+          <Stack spacing={2} px={2}>
+            {currentUser && (
+              <Link href={Routes.ProfilePage({ username: currentUser.username })} passHref>
+                <MenuItem as="a" icon={<SiSuperuser />}>
+                  Profile
+                </MenuItem>
+              </Link>
+            )}
+            <Link href={Routes.Home()}>
+              <Button
+                as="a"
+                size="sm"
+                rightIcon={<GiExitDoor />}
+                onClick={() =>
+                  logout().then(() =>
+                    toast({ title: "You've been logged out.", status: "success" })
+                  )
+                }
+              >
+                Log out
+              </Button>
             </Link>
-          )}
-          <Link href={Routes.Home()}>
-            <MenuItem
-              as="a"
-              icon={<FaSignOutAlt />}
-              onClick={() =>
-                logout().then(() => toast({ title: "You've been logged out.", status: "success" }))
-              }
-            >
-              Log out
-            </MenuItem>
-          </Link>
+          </Stack>
         </MenuList>
       </Menu>
     </Suspense>
