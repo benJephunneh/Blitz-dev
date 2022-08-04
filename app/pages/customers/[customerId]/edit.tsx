@@ -5,10 +5,12 @@ import getCustomer from "app/customers/queries/getCustomer"
 import updateCustomer from "app/customers/mutations/updateCustomer"
 import { FORM_ERROR } from "app/customers/components/CustomerForm"
 import CustomerForm from "app/customers/components/CustomerForm"
+import { useToast } from "@chakra-ui/react"
 // Should probably be an UpdateCustomerForm
 
 export const EditCustomer = () => {
   const router = useRouter()
+  const toast = useToast()
   const customerId = useParam("customerId", "number")
   const [customer, { setQueryData }] = useQuery(
     getCustomer,
@@ -23,11 +25,11 @@ export const EditCustomer = () => {
       <CustomerForm
         title="Edit customer"
         editCustomer
-        onSuccess={{_customer} => {
+        onSuccess={() => {
           toast({
             title: "Update successful",
-            description: `${_customer.firstname} ${_customer.lastname} updated`,
-            status: "success"
+            description: `${customer.firstname} ${customer.lastname} successfully updated.`,
+            status: "success",
           })
         }}
       />

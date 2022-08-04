@@ -1,4 +1,4 @@
-import { BlitzLayout, Link, Routes } from "blitz"
+import { BlitzLayout, Head, Link, Routes } from "blitz"
 import { Box, Button, Flex, Heading, Stack, Text, useColorModeValue } from "@chakra-ui/react"
 import { ReactNode } from "react"
 
@@ -14,6 +14,10 @@ const BoxLayout: BlitzLayout<BoxLayoutProps> = ({ title, description, children }
 
   return (
     <>
+      <Head>
+        <title>{description}</title>
+      </Head>
+
       <Flex
         w="100%"
         minH="100vh"
@@ -41,7 +45,7 @@ const BoxLayout: BlitzLayout<BoxLayoutProps> = ({ title, description, children }
             </Text>
           </Box>
 
-          <Stack spacing={4}>
+          <Stack spacing={2} w="auto">
             {children}
             <Link href={Routes.Home()} passHref>
               <Button as="a" size="lg" w="full">

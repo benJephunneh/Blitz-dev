@@ -2,7 +2,7 @@ import { useState, ReactNode, PropsWithoutRef } from "react"
 import { FormProvider, useForm, UseFormProps } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { Button } from "@chakra-ui/react"
+import { Button, useToast } from "@chakra-ui/react"
 
 export interface FormProps<S extends z.ZodType<any, any>>
   extends Omit<PropsWithoutRef<JSX.IntrinsicElements["form"]>, "onSubmit"> {
@@ -28,6 +28,7 @@ export function Form<S extends z.ZodType<any, any>>({
   schema,
   initialValues,
   onSubmit,
+  title,
   ...props
 }: FormProps<S>) {
   const ctx = useForm<z.infer<S>>({
@@ -58,19 +59,16 @@ export function Form<S extends z.ZodType<any, any>>({
       >
         {/* Form fields supplied as children are rendered here */}
         {children}
-
         {formError && (
           <div role="alert" style={{ color: "red" }}>
             {formError}
           </div>
         )}
-
         {submitText && (
           <Button w="full" bg="green.200" type="submit" disabled={ctx.formState.isSubmitting}>
             {submitText}
           </Button>
         )}
-
         <style global jsx>{`
           .form > * + * {
             margin-top: 1rem;

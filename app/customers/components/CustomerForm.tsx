@@ -15,20 +15,8 @@ type CustomerFormProps = {
 }
 
 const CustomerForm: FC<CustomerFormProps> = ({ title, newCustomer, editCustomer, onSuccess }) => {
-  const CustomerMutation = async (mutation, values) => {
-    const [customerMutation] = useMutation(mutation)
-    const customer = await customerMutation(values)
-
-    return customer
-  }
-
-  // const customerMutation = (() => {
-  //   if (newCustomer) {
-  //     return CustomerMutation(createCustomer)
-  //   } else if (editCustomer) {
-  //     return CustomerMutation(updateCustomer)
-  //   }
-  // })
+  const [createMutation] = useMutation(createCustomer)
+  const [updateMutation] = useMutation(updateCustomer)
 
   const {
     register,
@@ -46,10 +34,10 @@ const CustomerForm: FC<CustomerFormProps> = ({ title, newCustomer, editCustomer,
   const onSubmit = async (values) => {
     try {
       if (newCustomer) {
-        const customer = CustomerMutation(createCustomer, values)
+        const customer = await createMutation(values)
         onSuccess?.(customer)
       } else if (editCustomer) {
-        const customer = CustomerMutation({ updateCustomer }, values)
+        const customer = await updateMutation(values)
         onSuccess?.(customer)
       }
     } catch (error: any) {
@@ -63,15 +51,10 @@ const CustomerForm: FC<CustomerFormProps> = ({ title, newCustomer, editCustomer,
         <title>{title}</title>
       </Head>
 
-      <h1>{title}</h1>
-
       <Form onSubmit={handleSubmit(onSubmit)}>
         <VStack w="full">
           <Input placeholder="First name" {...register("firstname", { required: true })} />
           <Input placeholder="Last name" {...register("lastname", { required: true })} />
-          <Button type="submit" w="full" bg="green.200">
-            Submit
-          </Button>
         </VStack>
       </Form>
     </>

@@ -1,7 +1,8 @@
 import { Link, useRouter, useMutation, useParam, BlitzPage, Routes } from "blitz"
-import Layout from "app/core/layouts/Layout"
+import { Button } from "@chakra-ui/react"
 import createLocation from "app/locations/mutations/createLocation"
 import { LocationForm, FORM_ERROR } from "app/locations/components/LocationForm"
+import BoxLayout from "app/core/layouts/BoxLayout"
 
 const NewLocationPage: BlitzPage = () => {
   const router = useRouter()
@@ -9,9 +10,7 @@ const NewLocationPage: BlitzPage = () => {
   const [createLocationMutation] = useMutation(createLocation)
 
   return (
-    <div>
-      <h1>Create New Location</h1>
-
+    <>
       <LocationForm
         submitText="Create Location"
         // TODO use a zod schema for form validation
@@ -36,14 +35,20 @@ const NewLocationPage: BlitzPage = () => {
 
       <p>
         <Link href={Routes.LocationsPage({ customerId: customerId! })}>
-          <a>Locations</a>
+          <Button as="a" w="full">
+            Locations
+          </Button>
         </Link>
       </p>
-    </div>
+    </>
   )
 }
 
 NewLocationPage.authenticate = true
-NewLocationPage.getLayout = (page) => <Layout title={"Create New Location"}>{page}</Layout>
+NewLocationPage.getLayout = (page) => (
+  <BoxLayout title={"Create"} description="Create a new location">
+    {page}
+  </BoxLayout>
+)
 
 export default NewLocationPage
