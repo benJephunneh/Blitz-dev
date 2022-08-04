@@ -1,6 +1,7 @@
 import { Box, Container, Grid, GridItem, useColorModeValue } from "@chakra-ui/react"
 import { useSession } from "blitz"
 import { useState } from "react"
+import { FaGithub } from "react-icons/fa"
 import HeaderActions from "./HeaderActions"
 import HeaderDrawer from "./HeaderDrawer"
 import HeaderLogIn from "./HeaderLogIn"
@@ -13,7 +14,7 @@ const Header = () => {
   const toggleDrawer = () => setDrawerIsOpen((state) => !state)
 
   const isLoggedIn = !!session.userId
-  const isLoggedOut = !session.userId && !session.isLoading
+  const isNotLoggedIn = !session.userId && !session.isLoading
 
   return (
     <>
@@ -35,7 +36,7 @@ const Header = () => {
               gap={3}
             >
               <GridItem>
-                <HeaderActions />
+                <HeaderActions toggleDrawer={toggleDrawer} />
               </GridItem>
 
               <GridItem>
@@ -43,8 +44,9 @@ const Header = () => {
               </GridItem>
 
               <GridItem>
+                <FaGithub />
                 {isLoggedIn && <HeaderLogOut />}
-                {isLoggedOut && <HeaderLogIn />}
+                {isNotLoggedIn && <HeaderLogIn />}
               </GridItem>
             </Grid>
           </Container>

@@ -1,8 +1,9 @@
 import { Suspense } from "react"
-import { Head, Link, usePaginatedQuery, useRouter, BlitzPage, Routes } from "blitz"
+import { Head, Link, usePaginatedQuery, useRouter, BlitzPage, Routes, useMutation } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import getCustomers from "app/customers/queries/getCustomers"
 import { Button } from "@chakra-ui/react"
+import createCustomer from "app/customers/mutations/createCustomer"
 
 const ITEMS_PER_PAGE = 100
 

@@ -40,7 +40,7 @@ const NewCustomerForm = (props: NewCustomerFormProps) => {
     <>
       <h1>Create new customer</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <VStack w="full">
           <Input placeholder="First name" {...register("firstname", { required: true })} />
           <Input placeholder="Last name" {...register("lastname", { required: true })} />
@@ -48,7 +48,7 @@ const NewCustomerForm = (props: NewCustomerFormProps) => {
             Do it
           </Button>
         </VStack>
-      </form>
+      </Form>
     </>
   )
 }

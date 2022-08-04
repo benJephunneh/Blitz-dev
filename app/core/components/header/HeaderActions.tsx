@@ -18,7 +18,6 @@ import HeaderIconButton from "./HeaderIconButton"
 
 type HeaderActionProps = {
   toggleDrawer: () => void
-  toggleCustomer: () => void
 }
 
 const HeaderActions: FC<HeaderActionProps> = ({ toggleDrawer }) => {

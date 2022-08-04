@@ -18,42 +18,20 @@ export const EditCustomer = () => {
       staleTime: Infinity,
     }
   )
-  const [updateCustomerMutation] = useMutation(updateCustomer)
-
   return (
     <>
-      <Head>
-        <title>Edit Customer {customer.id}</title>
-      </Head>
-
-      <div>
-        <h1>Edit Customer {customer.id}</h1>
-        <pre>{JSON.stringify(customer, null, 2)}</pre>
-
-        <CustomerForm
-          submitText="Update Customer"
-          // TODO use a zod schema for form validation
-          //  - Tip: extract mutation's schema into a shared `validations.ts` file and
-          //         then import and use it here
-          // schema={UpdateCustomer}
-          initialValues={customer}
-          onSubmit={async (values) => {
-            try {
-              const updated = await updateCustomerMutation({
-                id: customer.id,
-                ...values,
-              })
-              await setQueryData(updated)
-              router.push(Routes.ShowCustomerPage({ customerId: updated.id }))
-            } catch (error: any) {
-              console.error(error)
-              return {
-                [FORM_ERROR]: error.toString(),
-              }
-            }
-          }}
-        />
-      </div>
+      <CustomerForm
+        title="Edit customer"
+        editCustomer
+        onSuccess={{_customer} => {
+          toast({
+            title: "Update successful",
+            description: `${_customer.firstname} ${_customer.lastname} updated`,
+            status: "success"
+          })
+        }}
+      />
+      <pre>{JSON.stringify(customer, null, 2)}</pre>
     </>
   )
 }
