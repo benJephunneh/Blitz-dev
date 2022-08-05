@@ -6,35 +6,44 @@ import TextDivider from "app/core/components/TextDivider"
 import { Signup as signupSchema } from "../validations"
 import signupMutation from "../mutations/signupMutation"
 import { FORM_ERROR } from "app/core/components/Form"
+import { useForm } from "react-hook-form"
+import createCustomer from "app/customers/mutations/createCustomer"
 
 const SignupPage: BlitzPage = () => {
   const [createUserMutation] = useMutation(signupMutation)
   const router = useRouter()
   const toast = useToast()
 
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm()
+
+  const onSubmit = async (values) => {
+    try {
+      const user = await createUserMutation(values)
+      const next = router.query.next ? decodeURIComponent(router.query.next as string) : "/"
+      router.push(next)
+      toast({
+        title: "Success",
+        description: `${user.username} successfully created.`,
+        status: "success",
+      })
+    } catch (error) {
+      console.log(error)
+      return {
+        [FORM_ERROR]: error.toString(),
+      }
+    }
+  }
+
   return (
     <Stack spacing={8}>
       <SignupForm
         submitText="Create user"
         schema={signupSchema}
-        onSubmit={async (values) => {
-          try {
-            console.log("asdfadf")
-            const user = await createUserMutation({ ...values })
-            const next = router.query.next ? decodeURIComponent(router.query.next as string) : "/"
-            router.push(next)
-            toast({
-              title: "Success",
-              description: `${user.username} successfully created.`,
-              status: "success",
-            })
-          } catch (error) {
-            console.log(error)
-            return {
-              [FORM_ERROR]: error.toString(),
-            }
-          }
-        }}
+        onSubmit={handleSubmit(onSubmit)}
       />
 
       <TextDivider>Or</TextDivider>
