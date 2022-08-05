@@ -4,6 +4,9 @@ import LabeledTextField from "app/core/components/LabeledTextField"
 import LabeledSelectField from "app/core/components/LabeledSelectField"
 
 export function SignupForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
+  const { submitText, initialValues, schema } = props
+  console.log("asdf")
+
   return (
     <Form<S> {...props}>
       <LabeledTextField name="username" placeholder="Username" />

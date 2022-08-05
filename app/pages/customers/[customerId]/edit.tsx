@@ -24,7 +24,7 @@ export const EditCustomer = () => {
     <>
       <CustomerForm
         title="Edit customer"
-        editCustomer
+        initialValues={customer}
         onSuccess={() => {
           toast({
             title: "Update successful",

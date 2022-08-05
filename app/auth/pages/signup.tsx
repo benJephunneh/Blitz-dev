@@ -3,7 +3,7 @@ import { Button, Stack, useToast } from "@chakra-ui/react"
 import { SignupForm } from "../components/SignupForm"
 import BoxLayout from "app/core/layouts/BoxLayout"
 import TextDivider from "app/core/components/TextDivider"
-import { Signup } from "../validations"
+import { Signup as signupSchema } from "../validations"
 import signupMutation from "../mutations/signupMutation"
 import { FORM_ERROR } from "app/core/components/Form"
 
@@ -16,11 +16,18 @@ const SignupPage: BlitzPage = () => {
     <Stack spacing={8}>
       <SignupForm
         submitText="Create user"
-        schema={Signup}
+        schema={signupSchema}
         onSubmit={async (values) => {
           try {
-            await createUserMutation({ ...values })
-            router.push(Routes.Home())
+            console.log("asdfadf")
+            const user = await createUserMutation({ ...values })
+            const next = router.query.next ? decodeURIComponent(router.query.next as string) : "/"
+            router.push(next)
+            toast({
+              title: "Success",
+              description: `${user.username} successfully created.`,
+              status: "success",
+            })
           } catch (error) {
             console.log(error)
             return {
