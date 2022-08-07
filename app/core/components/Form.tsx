@@ -37,6 +37,7 @@ export function Form<S extends z.ZodType<any, any>>({
     defaultValues: initialValues,
   })
   const [formError, setFormError] = useState<string | null>(null)
+  submitText = submitText ?? "Submit"
 
   return (
     <FormProvider {...ctx}>

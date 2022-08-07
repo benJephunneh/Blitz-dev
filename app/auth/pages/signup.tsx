@@ -1,49 +1,33 @@
 import { useRouter, BlitzPage, Routes, Link, useMutation } from "blitz"
-import { Button, Stack, useToast } from "@chakra-ui/react"
+import { Button, Stack } from "@chakra-ui/react"
 import { SignupForm } from "../components/SignupForm"
 import BoxLayout from "app/core/layouts/BoxLayout"
 import TextDivider from "app/core/components/TextDivider"
-import { Signup as signupSchema } from "../validations"
+import { Signup } from "../validations"
 import signupMutation from "../mutations/signupMutation"
 import { FORM_ERROR } from "app/core/components/Form"
-import { useForm } from "react-hook-form"
-import createCustomer from "app/customers/mutations/createCustomer"
 
 const SignupPage: BlitzPage = () => {
-  const [createUserMutation] = useMutation(signupMutation)
   const router = useRouter()
-  const toast = useToast()
-
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm()
-
-  const onSubmit = async (values) => {
-    try {
-      const user = await createUserMutation(values)
-      const next = router.query.next ? decodeURIComponent(router.query.next as string) : "/"
-      router.push(next)
-      toast({
-        title: "Success",
-        description: `${user.username} successfully created.`,
-        status: "success",
-      })
-    } catch (error) {
-      console.log(error)
-      return {
-        [FORM_ERROR]: error.toString(),
-      }
-    }
-  }
+  const [createUserMutation] = useMutation(signupMutation)
 
   return (
     <Stack spacing={8}>
       <SignupForm
-        submitText="Create user"
-        schema={signupSchema}
-        onSubmit={handleSubmit(onSubmit)}
+        submitText="Create"
+        schema={Signup}
+        initialValues={{ username: "", email: "", password: "", role: "Tech" }}
+        onSubmit={async (values) => {
+          try {
+            const user = await createUserMutation({ ...values })
+            router.push(Routes.Home())
+          } catch (error) {
+            console.error(error)
+            return {
+              [FORM_ERROR]: error.toString(),
+            }
+          }
+        }}
       />
 
       <TextDivider>Or</TextDivider>

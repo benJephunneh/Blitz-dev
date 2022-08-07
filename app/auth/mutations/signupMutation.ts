@@ -6,8 +6,6 @@ import { Role } from "types"
 export default resolver.pipe(
   resolver.zod(Signup),
   async ({ username, email, password, role }, ctx) => {
-    console.log("asdf")
-    console.log(username)
     const hashedPassword = await SecurePassword.hash(password.trim())
     const user = await db.user.create({
       data: {

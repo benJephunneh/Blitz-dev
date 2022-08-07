@@ -245,7 +245,6 @@ const Home: BlitzPage = () => {
           Powered by Blitz.js
         </a>
       </footer>
-      */}
 
           <style jsx global>{`
             @import url("https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;700&display=swap");
@@ -395,13 +394,14 @@ const Home: BlitzPage = () => {
               }
             }
           `}</style>
+      */}
         </Container>
       </Box>
     </>
   )
 }
 
-// Home.suppressFirstRenderFlicker = true
+Home.suppressFirstRenderFlicker = true
 Home.getLayout = (page) => <PlainLayout title="Home">{page}</PlainLayout>
 
 export default Home

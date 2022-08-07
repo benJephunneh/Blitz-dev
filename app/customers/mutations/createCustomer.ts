@@ -5,9 +5,14 @@ import { CreateCustomer as createCustomerSchema } from "app/customers/validation
 export default resolver.pipe(
   resolver.zod(createCustomerSchema),
   resolver.authorize(),
-  async (input) => {
+  async ({ firstname, lastname }) => {
     // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-    const customer = await db.customer.create({ data: input })
+    const customer = await db.customer.create({
+      data: {
+        firstname,
+        lastname,
+      },
+    })
 
     return customer
   }
