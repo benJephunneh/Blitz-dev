@@ -15,12 +15,12 @@ const SignupPage: BlitzPage = () => {
     <Stack spacing={8}>
       <SignupForm
         submitText="Create"
-        schema={Signup}
-        initialValues={{ username: "", email: "", password: "", role: "Tech" }}
+        // schema={Signup}
+        // initialValues={{ username: "", email: "", password: "", role: "Tech" }}
         onSubmit={async (values) => {
           try {
             const user = await createUserMutation({ ...values })
-            router.push(Routes.Home())
+            router.push(Routes.ProfilePage({ username: user.username }))
           } catch (error) {
             console.error(error)
             return {
@@ -41,7 +41,7 @@ const SignupPage: BlitzPage = () => {
   )
 }
 
-SignupPage.redirectAuthenticatedTo = "/"
+SignupPage.authenticate = true
 SignupPage.getLayout = (page) => (
   <BoxLayout title="Sign Up" description="Create new user">
     {page}

@@ -1,9 +1,6 @@
-import { PromiseReturnType, useMutation } from "blitz"
-import { useForm } from "react-hook-form"
-import { Form, FormProps, FORM_ERROR } from "app/core/components/Form"
+import { Form, FormProps } from "app/core/components/Form"
 import LabeledTextField from "app/core/components/LabeledTextField"
 import LabeledSelectField from "app/core/components/LabeledSelectField"
-import signupMutation from "../mutations/signupMutation"
 import { VStack } from "@chakra-ui/react"
 import { z } from "zod"
 
@@ -15,7 +12,7 @@ export function SignupForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
   return (
     <Form<S> {...props}>
       <VStack w="full">
-        <LabeledTextField name="username" type="text" placeholder="Username" />
+        <LabeledTextField name="username" placeholder="Username" />
         <LabeledTextField name="email" type="email" placeholder="Email" />
         <LabeledTextField name="password" type="password" placeholder="Password" />
         <LabeledSelectField name="role" bg="gray.100" w="max-content" defaultValue="Tech">

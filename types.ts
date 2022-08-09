@@ -3,6 +3,7 @@ import { User } from "db"
 
 // Note: You should switch to Postgres and then use a DB enum for role type
 export type Role = "Owner" | "Admin" | "Tech"
+export const Roles: Role[] = ["Owner", "Admin", "Tech"]
 
 declare module "blitz" {
   export interface Ctx extends DefaultCtx {
