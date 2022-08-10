@@ -1,58 +1,63 @@
 import { AuthenticationError, Link, useMutation, Routes, PromiseReturnType } from "blitz"
-import { LabeledTextField } from "app/core/components/LabeledTextField"
-import { Form, FORM_ERROR } from "app/core/components/Form"
+import Form, { FORM_ERROR } from "app/core/components/Form"
 import login from "app/auth/mutations/login"
-import { Login } from "app/auth/validations"
 import { useForm } from "react-hook-form"
+import { FC, ReactNode } from "react"
+import { Button, Input, VStack, Text, HStack, SimpleGrid } from "@chakra-ui/react"
 
 type LoginFormProps = {
   onSuccess?: (user: PromiseReturnType<typeof login>) => void
+  children?: ReactNode
 }
 
-export const LoginForm = (props: LoginFormProps) => {
+const LoginForm: FC<LoginFormProps> = ({ onSuccess, children }) => {
   const [loginMutation] = useMutation(login)
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
 
-  const onSubmit = async (values) => {
-    try {
-      const user = await loginMutation(values)
-      props.onSuccess?.(user)
-    } catch (error: any) {
-      if (error instanceof AuthenticationError) {
-        return { [FORM_ERROR]: "Sorry, those credentials are invalid" }
-      } else {
-        return {
-          [FORM_ERROR]:
-            "Sorry, we had an unexpected error. Please try again. - " + error.toString(),
-        }
+  const handleError = (error: any) => {
+    if (error instanceof AuthenticationError) {
+      return {
+        [FORM_ERROR]: "Email or password is incorrect.",
+      }
+    } else {
+      return {
+        [FORM_ERROR]: "Something is knot rite: " + error.toString(),
       }
     }
   }
   console.log(errors)
 
-  return (
-    <div>
-      <h1>Login</h1>
+  const onSubmit = async (values) => {
+    try {
+      const user = await loginMutation(values)
+      onSuccess?.(user)
+    } catch (error) {
+      return handleError(error)
+    }
+  }
 
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" placeholder="Username" {...register("username", { required: true })} />
-        <input
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <VStack w="full">
+        <Input placeholder="Username" {...register("username", { required: true })} />
+        <Input
           type="password"
           placeholder="Password"
           {...register("password", { required: true })}
         />
-
-        <input type="submit" />
-      </Form>
-
-      <div style={{ marginTop: "1rem" }}>
-        Or <Link href={Routes.SignupPage()}>Sign Up</Link>
-      </div>
-    </div>
+      </VStack>
+      <HStack py={2} spacing="auto">
+        <Button type="submit" size="sm" variant="ghost">
+          Log in
+        </Button>
+        {children}
+      </HStack>
+    </Form>
   )
 }
 

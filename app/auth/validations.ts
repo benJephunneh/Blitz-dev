@@ -31,7 +31,7 @@ export const ForgotPassword = z.object({
   email,
 })
 
-export const ResetPassword = z
+export const ChangePassword = z
   .object({
     username: username,
     password: password,
@@ -43,7 +43,7 @@ export const ResetPassword = z
     path: ["passwordConfirmation"], // set the path of the error
   })
 
-export const ChangePassword = z.object({
-  currentPassword: z.string(),
-  newPassword: password,
-})
+// export const ChangePassword = z.object({
+//   currentPassword: z.string(),
+//   newPassword: password,
+// })

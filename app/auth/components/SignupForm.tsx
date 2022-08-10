@@ -1,63 +1,70 @@
-import { useMutation } from "blitz"
-import { Form, FORM_ERROR } from "app/core/components/Form"
+import { PromiseReturnType, useMutation } from "blitz"
+import Form, { FORM_ERROR } from "app/core/components/Form"
 import signup from "app/auth/mutations/signup"
 import { useForm } from "react-hook-form"
+import { Input, Select, VStack } from "@chakra-ui/react"
+import { Signup } from "../validations"
+import { FC, ReactNode } from "react"
 
 type SignupFormProps = {
-  onSuccess?: () => void
+  // onSuccess?: () => void
+  onSuccess?: (user: PromiseReturnType<typeof signup>) => void
 }
 
-export const SignupForm = (props: SignupFormProps) => {
+const SignupForm: FC<SignupFormProps> = ({ onSuccess }) => {
   const [signupMutation] = useMutation(signup)
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm()
+
+  const handleError = (error: any) => {
+    if (error.code === "P2002" && error.meta?.target?.includes("email")) {
+      // This error comes from Prisma
+      return { email: "This email is already being used" }
+    } else if (error.code === "P2002" && error.meta?.target?.includes("username")) {
+      // This error comes from Prisma
+      return { username: "This username is already being used" }
+    } else if (error instanceof Error) {
+      return { [FORM_ERROR]: error.message }
+    } else {
+      return { [FORM_ERROR]: "Something wint rong" + error.toString() }
+    }
+  }
   console.log(errors)
 
   const onSubmit = async (values) => {
     try {
-      await signupMutation(values)
-      props.onSuccess?.()
+      const user = await signupMutation(values)
+      onSuccess?.(user)
+      // const user = await signupMutation(values)
+      // props.onSuccess?.(user)
     } catch (error: any) {
-      if (error.code === "P2002" && error.meta?.target?.includes("email")) {
-        // This error comes from Prisma
-        return { email: "This email is already being used" }
-      } else if (error.code === "P2002" && error.meta?.target?.includes("username")) {
-        // This error comes from Prisma
-        return { email: "This username is already being used" }
-      } else {
-        return { [FORM_ERROR]: error.toString() }
-      }
+      return handleError(error)
     }
   }
 
   return (
-    <div>
-      <h1>Create an Account</h1>
-
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
+    <Form submitText="Create user" onSubmit={handleSubmit(onSubmit)}>
+      <VStack w="full">
+        <Input
           placeholder="Username"
           {...register("username", { required: true, maxLength: 80 })}
         />
-        <input type="email" placeholder="email" {...register("email", { required: true })} />
-        <input
+        <Input type="email" placeholder="Email" {...register("email", { required: true })} />
+        <Input
           type="password"
-          placeholder="password"
+          placeholder="Password"
           {...register("password", { required: true, min: 10 })}
         />
-        <select {...register("role", { required: true })}>
+        <Select bg="gray.300" defaultValue="Tech" {...register("role", { required: true })}>
           <option value="Owner">Owner</option>
           <option value="Admin">Admin</option>
           <option value="Tech">Tech</option>
-        </select>
-
-        <input type="submit" />
-      </Form>
-    </div>
+        </Select>
+      </VStack>
+    </Form>
   )
 }
 
