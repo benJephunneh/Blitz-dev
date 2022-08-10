@@ -1,13 +1,13 @@
-import { Icon, IconProps } from "@chakra-ui/react"
+import { Box, BoxProps } from "@chakra-ui/react"
 import { Image } from "blitz"
 import abstIcon from "public/abst icon.png"
 import { FC } from "react"
 
-const LogoIcon: FC<IconProps> = (props) => {
+const LogoIcon: FC<BoxProps> = (props) => {
   return (
-    <Icon viewBox="0 0 200 200">
+    <Box {...props}>
       <Image src={abstIcon} alt="ABST icon" />
-    </Icon>
+    </Box>
   )
 }
 

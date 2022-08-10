@@ -2,7 +2,7 @@ import { Suspense } from "react"
 import { Link, BlitzPage, useMutation, Routes, useSession } from "blitz"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import Logo from "app/core/components/Logo"
-import Layout from "app/core/layouts/Layout"
+import PlainLayout from "app/core/layouts/PlainLayout"
 import logout from "app/auth/mutations/logout"
 import logo from "public/logo.png"
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter"
@@ -29,12 +29,8 @@ const links = [
     href: "/locations",
   },
   {
-    name: "Blitzjs.com",
-    href: "https://blitzjs.com/docs/getting-started?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new",
-  },
-  {
-    name: "Blitzjs Github",
-    href: "https://github.com/blitz-js/blitz",
+    name: "benJephunneh Github",
+    href: "https://github.com/benJephunneh/Blitz-dev",
   },
 ]
 
@@ -95,6 +91,7 @@ const Home: BlitzPage = () => {
 
   return (
     <Container maxWidth="container.xl" padding={4}>
+      {/*
       <VStack alignItems="flex-start">
         <HStack>
           <Suspense fallback="Logging in...">
@@ -121,11 +118,10 @@ const Home: BlitzPage = () => {
           </Text>
         </VStack>
       </VStack>
+  */}
       <Flex height="50vh" paddingY={20}>
         <VStack width="full" height="full" padding={10} spacing={10} alignItems="flex-start">
-          <Suspense>
-            <UserInfo />
-          </Suspense>
+          <Suspense>{/* <UserInfo /> */}</Suspense>
         </VStack>
         <VStack
           width="full"
@@ -146,6 +142,7 @@ const Home: BlitzPage = () => {
           })}
         </VStack>
       </Flex>
+      {/*
       <div className="container">
         <main>
           <p>
@@ -399,11 +396,12 @@ const Home: BlitzPage = () => {
           }
         }
       `}</style>
+      */}
     </Container>
   )
 }
 
 Home.suppressFirstRenderFlicker = true
-Home.getLayout = (page) => <Layout title="Home">{page}</Layout>
+Home.getLayout = (page) => <PlainLayout title="Home">{page}</PlainLayout>
 
 export default Home

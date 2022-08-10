@@ -1,4 +1,5 @@
 import { HStack } from "@chakra-ui/react"
+import HeaderUserMenu from "./HeaderUserMenu"
 
 const HeaderLogOut = () => {
   return (

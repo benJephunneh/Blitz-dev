@@ -1,8 +1,17 @@
-import { Button, HStack } from "@chakra-ui/react"
-import { Link, Routes } from "blitz"
-import { FaArrowRight } from "react-icons/fa"
+import { Button, Fade, HStack, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react"
+import { Link, Routes, useRouter } from "blitz"
+import { FaArrowRight, FaChevronDown } from "react-icons/fa"
 
+const HeaderLoginButton = () => {
+  return (
+    <MenuButton as={Button} size="sm" variant="ghost" px={1} rightIcon={<FaChevronDown />}>
+      Log in
+    </MenuButton>
+  )
+}
 const HeaderLogIn = () => {
+  const router = useRouter()
+
   return (
     <HStack spacing={1} justify="flex-end">
       <Link href={Routes.LoginPage()} passHref>
