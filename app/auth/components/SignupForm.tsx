@@ -3,12 +3,15 @@ import Form, { FORM_ERROR } from "app/core/components/Form"
 import signup from "app/auth/mutations/signup"
 import { useForm } from "react-hook-form"
 import { Input, Select, VStack } from "@chakra-ui/react"
+import { Signup } from "../validations"
+import { FC, ReactNode } from "react"
 
 type SignupFormProps = {
+  // onSuccess?: () => void
   onSuccess?: (user: PromiseReturnType<typeof signup>) => void
 }
 
-const SignupForm = (props: SignupFormProps) => {
+const SignupForm: FC<SignupFormProps> = ({ onSuccess }) => {
   const [signupMutation] = useMutation(signup)
   const {
     register,
@@ -22,7 +25,9 @@ const SignupForm = (props: SignupFormProps) => {
       return { email: "This email is already being used" }
     } else if (error.code === "P2002" && error.meta?.target?.includes("username")) {
       // This error comes from Prisma
-      return { email: "This username is already being used" }
+      return { username: "This username is already being used" }
+    } else if (error instanceof Error) {
+      return { [FORM_ERROR]: error.message }
     } else {
       return { [FORM_ERROR]: "Something wint rong" + error.toString() }
     }
@@ -32,14 +37,16 @@ const SignupForm = (props: SignupFormProps) => {
   const onSubmit = async (values) => {
     try {
       const user = await signupMutation(values)
-      props.onSuccess?.(user)
+      onSuccess?.(user)
+      // const user = await signupMutation(values)
+      // props.onSuccess?.(user)
     } catch (error: any) {
       return handleError(error)
     }
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form submitText="Create user" onSubmit={handleSubmit(onSubmit)}>
       <VStack w="full">
         <Input
           placeholder="Username"

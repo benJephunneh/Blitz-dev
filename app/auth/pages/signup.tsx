@@ -11,7 +11,8 @@ const SignupPage: BlitzPage = () => {
     <Stack spacing={8}>
       <SignupForm
         onSuccess={(_user) => {
-          router.push(Routes.Home())
+          // router.push(Routes.Home())
+          router.push(Routes.ProfilePage({ username: _user.username }))
           toast({
             title: `Welcome, ${_user.username}`,
             description: "User successfully created.",
@@ -19,17 +20,12 @@ const SignupPage: BlitzPage = () => {
           })
         }}
       />
-
-      <Link href={Routes.Home()} passHref>
-        <Button as="a" w="full" bg="green.200">
-          Create user
-        </Button>
-      </Link>
     </Stack>
   )
 }
 
-SignupPage.redirectAuthenticatedTo = "/"
+// Require authentication if you want only admins to be able to sign people up.
+// SignupPage.authenticate = true
 SignupPage.getLayout = (page) => (
   <BoxLayout title="Sign Up" description="Create new user">
     {page}

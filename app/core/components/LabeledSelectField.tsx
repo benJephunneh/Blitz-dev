@@ -1,22 +1,21 @@
 import { forwardRef, PropsWithoutRef, ComponentPropsWithoutRef } from "react"
 import { useForm } from "react-hook-form"
-import { Input } from "@chakra-ui/input"
 import { FormControl, FormLabel } from "@chakra-ui/form-control"
-import { FormErrorMessage } from "@chakra-ui/react"
+import { Select } from "@chakra-ui/react"
 
-export interface LabeledTextFieldProps extends ComponentPropsWithoutRef<typeof Input> {
+export interface LabeledSelectFieldProps extends ComponentPropsWithoutRef<typeof Select> {
   /** Field name. */
   name: string
   /** Field label. */
   label: string
   /** Field type. Doesn't include radio buttons and checkboxes */
-  type?: "text" | "password" | "email" | "number"
   outerProps?: PropsWithoutRef<JSX.IntrinsicElements["div"]>
   labelProps?: ComponentPropsWithoutRef<"label">
+  children: JSX.Element[]
 }
 
-export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
-  ({ label, outerProps, labelProps, name, ...props }, ref) => {
+export const LabeledSelectField = forwardRef<HTMLSelectElement, LabeledSelectFieldProps>(
+  ({ label, outerProps, labelProps, name, children, ...props }, ref) => {
     const {
       register,
       formState: { isSubmitting, errors },
@@ -27,11 +26,12 @@ export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldPro
     return (
       <FormControl {...outerProps}>
         {label && <FormLabel {...labelProps}>{label}</FormLabel>}
-        <Input disabled={isSubmitting} {...register(name)} {...props} />
-        {errors.name && <span>Field is required</span>}
+        <Select value={name} disabled={isSubmitting} {...register(name)} {...props}>
+          {children}
+        </Select>
       </FormControl>
     )
   }
 )
 
-export default LabeledTextField
+export default LabeledSelectField

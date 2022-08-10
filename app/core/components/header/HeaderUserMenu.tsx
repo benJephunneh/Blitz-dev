@@ -22,6 +22,7 @@ import avatar from "public/Yangshuo.jpg"
 import { Link, Routes, useMutation } from "blitz"
 import logoutMutation from "app/auth/mutations/logout"
 import { Suspense } from "react"
+import { FcServices } from "react-icons/fc"
 
 const UserMenuLoader = () => (
   <Button size="sm" variant="ghost" px={1}>
@@ -60,7 +61,7 @@ const HeaderUserMenu = () => {
           <Stack spacing={2} px={2}>
             {currentUser && (
               <Link href={Routes.ProfilePage({ username: currentUser.username })} passHref>
-                <MenuItem as="a" icon={<SiSuperuser />}>
+                <MenuItem as="a" icon={<FcServices />}>
                   Profile
                 </MenuItem>
               </Link>

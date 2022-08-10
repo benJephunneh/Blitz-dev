@@ -4,7 +4,18 @@ import { Box, Heading, Icon, useColorModeValue } from "@chakra-ui/react"
 import { Link, Routes, RouteUrlObject, useRouter } from "blitz"
 import { FC, ReactNode } from "react"
 import { IconType } from "react-icons"
-import { FcHome } from "react-icons/fc"
+import {
+  FcAssistant,
+  FcCalendar,
+  FcConferenceCall,
+  FcGlobe,
+  FcHome,
+  FcMoneyTransfer,
+  FcPieChart,
+  FcPlanner,
+  FcRuler,
+  FcShipped,
+} from "react-icons/fc"
 
 type NavigationItemProps = {
   route: RouteUrlObject
@@ -65,12 +76,14 @@ const NavigationExternalItem: FC<NavigationExternalItemProps> = ({ children, ico
   )
 }
 
-const NavigationSection: FC<{ title: string; children: ReactNode }> = ({ title, children }) => {
+const NavigationSection: FC<{ title?: string; children: ReactNode }> = ({ title, children }) => {
   return (
     <Stack as="section" spacing={2}>
-      <Heading fontSize="xs" pl={3} textTransform="uppercase" pb={2} color="gray.500">
-        {title}
-      </Heading>
+      {title && (
+        <Heading fontSize="xs" pl={3} textTransform="uppercase" pb={2} color="gray.500">
+          {title}
+        </Heading>
+      )}
 
       {children}
     </Stack>
@@ -80,24 +93,42 @@ const NavigationSection: FC<{ title: string; children: ReactNode }> = ({ title, 
 const Navigation = () => {
   return (
     <Box as="aside">
-      <Stack as="aside" spacing={8}>
-        <NavigationSection title="abst">
+      <Stack as="aside" spacing={4}>
+        <NavigationSection>
           <NavigationItem route={Routes.Home()} icon={FcHome}>
             Home
           </NavigationItem>
         </NavigationSection>
-        {/*
-        <NavigationSection title="customers">
-          <NavigationItem route={Routes.CustomerPage()} icon={FcHome}>
-            Home
+        <NavigationSection>
+          <NavigationItem route={Routes.Home()} icon={FcConferenceCall}>
+            Customers
           </NavigationItem>
         </NavigationSection>
-        <NavigationSection title="locations">
-          <NavigationItem route={Routes.LocationPage()} icon={FcHome}>
-            Home
+        <NavigationSection>
+          <NavigationItem route={Routes.Home()} icon={FcGlobe}>
+            Locations
           </NavigationItem>
         </NavigationSection>
-        */}
+        <NavigationSection>
+          <NavigationItem route={Routes.Home()} icon={FcRuler}>
+            Estimates
+          </NavigationItem>
+        </NavigationSection>
+        <NavigationSection>
+          <NavigationItem route={Routes.Home()} icon={FcMoneyTransfer}>
+            Invoices
+          </NavigationItem>
+        </NavigationSection>
+        <NavigationSection>
+          <NavigationItem route={Routes.Home()} icon={FcShipped}>
+            Inventory
+          </NavigationItem>
+        </NavigationSection>
+        <NavigationSection>
+          <NavigationItem route={Routes.Home()} icon={FcPlanner}>
+            Schedule
+          </NavigationItem>
+        </NavigationSection>
       </Stack>
     </Box>
   )

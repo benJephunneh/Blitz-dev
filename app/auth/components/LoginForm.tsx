@@ -1,5 +1,5 @@
 import { AuthenticationError, Link, useMutation, Routes, PromiseReturnType } from "blitz"
-import { FORM_ERROR } from "app/core/components/Form"
+import Form, { FORM_ERROR } from "app/core/components/Form"
 import login from "app/auth/mutations/login"
 import { useForm } from "react-hook-form"
 import { FC, ReactNode } from "react"
@@ -42,7 +42,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSuccess, children }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <VStack w="full">
         <Input placeholder="Username" {...register("username", { required: true })} />
         <Input
@@ -57,7 +57,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSuccess, children }) => {
         </Button>
         {children}
       </HStack>
-    </form>
+    </Form>
   )
 }
 
