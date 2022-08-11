@@ -1,18 +1,35 @@
 import { useRouter, BlitzPage, Routes } from "blitz"
-import Layout from "app/core/layouts/Layout"
-import { SignupForm } from "app/auth/components/SignupForm"
+import SignupForm from "app/auth/components/SignupForm"
+import { Stack, useToast } from "@chakra-ui/react"
+import BoxLayout from "header/app/core/layouts/BoxLayout"
 
 const SignupPage: BlitzPage = () => {
   const router = useRouter()
+  const toast = useToast()
+
+  const next = router.query.next as string | undefined
+  const redirectTo = decodeURIComponent(next || "/")
 
   return (
-    <div>
-      <SignupForm onSuccess={() => router.push(Routes.Home())} />
-    </div>
+    <Stack spacing={8}>
+      <SignupForm
+        onSuccess={(_user) => {
+          router.push(redirectTo)
+          toast({
+            title: `Welcome, ${_user.username}`,
+            description: "User successfully created.",
+            status: "success",
+          })
+        }}
+      />
+    </Stack>
   )
 }
 
-SignupPage.redirectAuthenticatedTo = "/"
-SignupPage.getLayout = (page) => <Layout title="Sign Up">{page}</Layout>
+SignupPage.getLayout = (page) => (
+  <BoxLayout title="Sign Up" description="Create new user">
+    {page}
+  </BoxLayout>
+)
 
 export default SignupPage

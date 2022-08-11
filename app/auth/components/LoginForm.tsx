@@ -4,12 +4,16 @@ import { Form, FORM_ERROR } from "app/core/components/Form"
 import login from "app/auth/mutations/login"
 import { Login } from "app/auth/validations"
 import { useForm } from "react-hook-form"
+import { Button, HStack, Input, VStack } from "@chakra-ui/react"
+import { ReactNode } from "react"
 
 type LoginFormProps = {
   onSuccess?: (user: PromiseReturnType<typeof login>) => void
+  children?: ReactNode
 }
 
 export const LoginForm = (props: LoginFormProps) => {
+  const { onSuccess, children } = props
   const [loginMutation] = useMutation(login)
   const {
     register,
@@ -40,24 +44,23 @@ export const LoginForm = (props: LoginFormProps) => {
   console.log(errors)
 
   return (
-    <div>
-      <h1>Login</h1>
-
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" placeholder="Username" {...register("username", { required: true })} />
-        <input
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <VStack w="full">
+        <Input placeholder="Username" {...register("username", { required: true })} />
+        <Input
           type="password"
           placeholder="Password"
           {...register("password", { required: true })}
         />
+      </VStack>
 
-        <input type="submit" />
-      </Form>
-
-      <div style={{ marginTop: "1rem" }}>
-        Or <Link href={Routes.SignupPage()}>Sign Up</Link>
-      </div>
-    </div>
+      <HStack py={2} spacing="auto">
+        <Button type="submit" size="sm" variant="ghost">
+          Log in
+        </Button>
+        {children}
+      </HStack>
+    </Form>
   )
 }
 

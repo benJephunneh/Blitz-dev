@@ -3,7 +3,7 @@ import db from "db"
 import { Signup } from "app/auth/validations"
 import { Role } from "types"
 
-export default resolver.pipe(
+const signup = resolver.pipe(
   resolver.zod(Signup),
   async ({ username, email, password, role }, ctx) => {
     const hashedPassword = await SecurePassword.hash(password.trim())
@@ -21,3 +21,5 @@ export default resolver.pipe(
     return user
   }
 )
+
+export default signup
