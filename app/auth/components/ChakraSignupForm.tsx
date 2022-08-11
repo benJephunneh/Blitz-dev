@@ -1,9 +1,7 @@
-import { Button, FormControl, FormLabel, HStack, Input, Select, VStack } from "@chakra-ui/react"
-import { t } from "@chakra-ui/styled-system/dist/declarations/src/utils"
+import { Button, FormControl, HStack, Input, Select, VStack } from "@chakra-ui/react"
 import { FORM_ERROR } from "app/core/components/Form"
-import { AuthenticationError, useMutation } from "blitz"
+import { useMutation } from "blitz"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 import signup from "../mutations/signup"
 
 type SignupFormProps = {

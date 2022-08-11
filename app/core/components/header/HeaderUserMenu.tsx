@@ -19,7 +19,7 @@ import { FaChevronDown, FaCog, FaSignOutAlt, FaUser, FaUserTie } from "react-ico
 import { SiSuperuser } from "react-icons/si"
 import { GiExitDoor } from "react-icons/gi"
 import avatar from "public/Yangshuo.jpg"
-import { Link, Routes, useMutation } from "blitz"
+import { Link, Router, Routes, useMutation, useRouter } from "blitz"
 import logoutMutation from "app/auth/mutations/logout"
 import { Suspense } from "react"
 import { FcServices } from "react-icons/fc"
@@ -48,6 +48,7 @@ const UserMenuButton = () => {
 }
 
 const HeaderUserMenu = () => {
+  const router = useRouter()
   const [logout] = useMutation(logoutMutation)
   const currentUser = useCurrentUser({ suspense: false })
   const toast = useToast()
@@ -72,9 +73,9 @@ const HeaderUserMenu = () => {
                 size="sm"
                 rightIcon={<GiExitDoor />}
                 onClick={() =>
-                  logout().then(() =>
-                    toast({ title: "You've been logged out.", status: "success" })
-                  )
+                  logout()
+                    .then(() => toast({ title: "You've been logged out.", status: "success" }))
+                    .then(() => router.push(Routes.Home()))
                 }
               >
                 Log out
