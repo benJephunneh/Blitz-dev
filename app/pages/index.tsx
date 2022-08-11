@@ -1,9 +1,22 @@
-import { Suspense } from "react"
-import { Link, BlitzPage, useMutation, Routes, useSession } from "blitz"
+import { FC, Suspense } from "react"
+import { Link, BlitzPage, useMutation, Routes, useSession, RouteUrlObject } from "blitz"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import logout from "app/auth/mutations/logout"
-import { Box, Container, Flex, HStack, VStack } from "@chakra-ui/react"
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Heading,
+  HStack,
+  Icon,
+  Text,
+  useColorModeValue,
+  VStack,
+} from "@chakra-ui/react"
 import PlainLayout from "app/core/layouts/PlainLayout"
+import { IconType } from "react-icons"
+import { FcConferenceCall, FcGlobe } from "react-icons/fc"
 
 const links = [
   {
@@ -12,17 +25,41 @@ const links = [
   },
   {
     name: "Locations",
-    href: "/locations",
+    href: "/customers/locations",
   },
   {
-    name: "Blitzjs.com",
-    href: "https://blitzjs.com/docs/getting-started?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new",
-  },
-  {
-    name: "Blitzjs Github",
-    href: "https://github.com/blitz-js/blitz",
+    name: "Jobs",
+    href: "/customers/locations/jobs",
   },
 ]
+
+type IconCardProps = {
+  icon: IconType
+  title: string
+  text: string | JSX.Element
+  actionLink?: RouteUrlObject
+  actionText?: string
+}
+
+const IconCard: FC<IconCardProps> = ({ icon, title, text, actionLink, actionText }) => {
+  return (
+    <Box bg={useColorModeValue("white", "gray.800")} p={5} borderRadius="md" textAlign="center">
+      <Icon as={icon} w={8} h={8} mb={2} />
+      <Heading size="md" mb={2}>
+        {title}
+      </Heading>
+      <Text opacity="0.8">{text}</Text>
+
+      {actionLink && actionText && (
+        <Link href={actionLink} passHref>
+          <Button isFullWidth as="a" mt={5}>
+            {actionText}
+          </Button>
+        </Link>
+      )}
+    </Box>
+  )
+}
 
 const UserInfo = () => {
   const currentUser = useCurrentUser()
@@ -112,13 +149,15 @@ const Home: BlitzPage = () => {
       </VStack>
       */}
 
-          <Flex height="50vh" paddingY={20}>
+          <Flex height="75vh" paddingY={20}>
             <VStack width="full" height="full" padding={10} spacing={10} alignItems="flex-start">
+              <IconCard icon={FcConferenceCall} title="Customers" text="View list of customers" />
+              <IconCard icon={FcGlobe} title="Locations" text="View customer locations" />
               {/*
-          <Suspense>
-            <UserInfo />
-          </Suspense>
-          */}
+              <Suspense>
+                <UserInfo />
+              </Suspense>
+    */}
             </VStack>
             <VStack
               width="full"
@@ -208,44 +247,32 @@ const Home: BlitzPage = () => {
           </div>
         </main>
       </div>
+            */}
 
-      <footer>
-        <a
-          className="button"
-          href="https://blitzjs.com/docs/getting-started?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Documentation
-        </a>
-        <a
-          className="button-outline"
-          href="https://github.com/blitz-js/blitz"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Github Repo
-        </a>
-        <a
-          className="button-outline"
-          href="https://discord.blitzjs.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Discord Community
-        </a>
-      </footer>
+          <footer>
+            <Suspense>
+              <HStack spacing={2}>
+                <Button as="a" href="https://github.com/benJephunneh/Blitz-dev">
+                  Github - Blitz-dev
+                </Button>
+                <Button as="a" href="https://www.apalacheeseptic.com/">
+                  Apalachee Backhoe
+                </Button>
+              </HStack>
+            </Suspense>
+          </footer>
 
-      <footer>
-        <a
-          href="https://blitzjs.com?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by Blitz.js
-        </a>
-      </footer>
+          <footer>
+            <a
+              href="https://blitzjs.com?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Powered by Blitz.js
+            </a>
+          </footer>
 
+          {/*
           <style jsx global>{`
             @import url("https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;700&display=swap");
 

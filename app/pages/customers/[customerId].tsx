@@ -13,11 +13,15 @@ export const Customer = () => {
   return (
     <>
       <Head>
-        <title>Customer {customer.id}</title>
+        <title>
+          {customer.firstname} {customer.lastname}
+        </title>
       </Head>
 
       <div>
-        <h1>Customer {customer.id}</h1>
+        <h1>
+          {customer.firstname} {customer.lastname}
+        </h1>
         <pre>{JSON.stringify(customer, null, 2)}</pre>
 
         <Link href={Routes.EditCustomerPage({ customerId: customer.id })}>
