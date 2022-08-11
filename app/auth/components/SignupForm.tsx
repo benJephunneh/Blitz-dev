@@ -34,7 +34,6 @@ const SignupForm: FC<SignupFormProps> = ({ onSuccess }) => {
 
   const onSubmit = async (values) => {
     try {
-      console.log(values)
       const user = await signupMutation(values)
       onSuccess?.(user)
     } catch (error: any) {

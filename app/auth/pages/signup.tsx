@@ -1,6 +1,6 @@
-import { useRouter, BlitzPage, Routes } from "blitz"
-import SignupForm from "app/auth/components/SignupForm"
+import { useRouter, BlitzPage } from "blitz"
 import { Stack, useToast } from "@chakra-ui/react"
+import SignupForm from "app/auth/components/SignupForm"
 import BoxLayout from "header/app/core/layouts/BoxLayout"
 
 const SignupPage: BlitzPage = () => {
