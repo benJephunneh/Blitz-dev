@@ -1,6 +1,6 @@
 import { useRouter, BlitzPage, Routes, Link } from "blitz"
 import { Button, Stack, useToast } from "@chakra-ui/react"
-import SignupForm from "../components/SignupForm"
+import ChakraSignupForm from "../components/ChakraSignupForm"
 import BoxLayout from "app/core/layouts/BoxLayout"
 
 const SignupPage: BlitzPage = () => {
@@ -9,7 +9,7 @@ const SignupPage: BlitzPage = () => {
 
   return (
     <Stack spacing={8}>
-      <SignupForm
+      <ChakraSignupForm
         onSuccess={(_user) => {
           // router.push(Routes.Home())
           router.push(Routes.ProfilePage({ username: _user.username }))

@@ -74,7 +74,7 @@ const UserInfo = () => {
 }
 
 const Home: BlitzPage = () => {
-  const branch = "master/dev/chakra/chakra-header"
+  const branch = "master/dev/chakra/chakra-rhf"
 
   const session = useSession({ suspense: false })
   const isLoggedIn = !!session.userId

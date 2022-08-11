@@ -11,6 +11,7 @@ import {
   Stack,
   useToast,
 } from "@chakra-ui/react"
+import ChakraLoginForm from "app/auth/components/ChakraLoginForm"
 import LoginForm from "app/auth/components/LoginForm"
 import { Link, Routes, useRouter } from "blitz"
 import { Suspense } from "react"
@@ -47,7 +48,7 @@ const HeaderLogIn = () => {
 
           <MenuList>
             <Stack spacing={8} px={2}>
-              <LoginForm
+              <ChakraLoginForm
                 onSuccess={(_user) => {
                   const next = router.query.next
                     ? decodeURIComponent(router.query.next as string)
@@ -65,7 +66,7 @@ const HeaderLogIn = () => {
                     Sign up
                   </Button>
                 </Link>
-              </LoginForm>
+              </ChakraLoginForm>
             </Stack>
           </MenuList>
         </Menu>
