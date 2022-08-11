@@ -56,22 +56,14 @@ const SignupForm: FC<SignupFormProps> = ({ onSuccess }) => {
           <option value="Tech">Tech</option>
         </LabeledSelectField>
   */}
-        <LabeledTextField
-          label="Username"
-          type="text"
-          {...register("username", { required: true })}
-        />
-        <LabeledTextField
-          type="email"
-          placeholder="email"
-          {...register("email", { required: true })}
-        />
-        <LabeledTextField
+        <Input placeholder="Username" {...register("username", { required: true })} />
+        <Input type="email" placeholder="Email" {...register("email", { required: true })} />
+        <Input
           type="password"
-          placeholder="password"
+          placeholder="Password"
           {...register("password", { required: true })}
         />
-        <LabeledSelectField
+        <Select
           bg="blue.100"
           mt={2}
           w="max-content"
@@ -81,7 +73,7 @@ const SignupForm: FC<SignupFormProps> = ({ onSuccess }) => {
           <option value="Owner">Owner</option>
           <option value="Admin">Admin</option>
           <option value="Tech">Tech</option>
-        </LabeledSelectField>
+        </Select>
       </VStack>
     </Form>
   )

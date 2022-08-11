@@ -1,5 +1,5 @@
 import { forwardRef, PropsWithoutRef, ComponentPropsWithoutRef } from "react"
-import { useForm, useFormContext } from "react-hook-form"
+import { useFormContext } from "react-hook-form"
 import { Input } from "@chakra-ui/input"
 import { FormControl, FormLabel } from "@chakra-ui/form-control"
 
@@ -15,7 +15,7 @@ export interface LabeledTextFieldProps extends PropsWithoutRef<typeof Input> {
 }
 
 export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
-  ({ label, outerProps, labelProps, name, type, ...props }, ref) => {
+  ({ label, outerProps, labelProps, name, ...props }, ref) => {
     const {
       register,
       formState: { isSubmitting, errors },
