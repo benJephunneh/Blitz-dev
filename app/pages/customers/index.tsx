@@ -63,7 +63,7 @@ const CustomersPage: BlitzPage = () => {
   )
 }
 
-CustomersPage.authenticate = true
+// CustomersPage.authenticate = true
 CustomersPage.getLayout = (page) => <Layout>{page}</Layout>
 
 export default CustomersPage

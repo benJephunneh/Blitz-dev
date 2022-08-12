@@ -28,7 +28,7 @@ type IconCardProps = {
 
 const IconCard: FC<IconCardProps> = ({ icon, title, text, actionLink, actionText }) => {
   return (
-    <Box bg={useColorModeValue("gray.50", "gray.800")} p={5} borderRadius="md" textAlign="center">
+    <Box bg={useColorModeValue("white", "gray.800")} p={5} borderRadius="md" textAlign="center">
       <Icon as={icon} w={8} h={8} mb={2} />
       <Heading size="md" mb={2}>
         {title}
@@ -95,21 +95,31 @@ const UserInfo = () => {
   }
 }
 
-const Home: BlitzPage = () => {
-  // Bring over apalacheeseptic.com
+const Dashboard: BlitzPage = () => {
   const branch = "master/dev/chakra/chakra-rhf"
-
   const session = useSession({ suspense: false })
   const isLoggedIn = !!session.userId
+  const currentUser = useCurrentUser()
 
   return (
     <>
       <Box bg={useColorModeValue("gray.50", "gray.800")}>
-        <Container as="main" maxWidth="container.sm" py={{ base: 12, md: 20 }}>
+        <Container as="main" maxWidth="container.sm" textAlign="center" py={{ base: 12, md: 20 }}>
+          {isLoggedIn && (
+            <Heading size="2xl" mb={2}>
+              {currentUser?.username}
+            </Heading>
+          )}
+
           <Flex height="75vh" paddingY={20}>
             <VStack width="full" height="full" padding={10} spacing={10} alignItems="flex-start">
               <IconCard icon={FcConferenceCall} title="Customers" text="View list of customers" />
               <IconCard icon={FcGlobe} title="Locations" text="View customer locations" />
+              {/*
+              <Suspense>
+                <UserInfo />
+              </Suspense>
+    */}
             </VStack>
             <VStack
               width="full"
@@ -120,7 +130,6 @@ const Home: BlitzPage = () => {
               background="gray.50"
             ></VStack>
           </Flex>
-
           <footer>
             <Suspense>
               <HStack spacing={2}>
@@ -149,8 +158,8 @@ const Home: BlitzPage = () => {
   )
 }
 
-Home.suppressFirstRenderFlicker = true
-Home.redirectAuthenticatedTo = Routes.Dashboard()
-Home.getLayout = (page) => <PlainLayout title="Home">{page}</PlainLayout>
+Dashboard.suppressFirstRenderFlicker = true
+Dashboard.authenticate = { redirectTo: Routes.Home() }
+Dashboard.getLayout = (page) => <PlainLayout title="Dashboard">{page}</PlainLayout>
 
-export default Home
+export default Dashboard

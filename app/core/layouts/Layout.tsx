@@ -1,3 +1,4 @@
+import { Box, useColorModeValue } from "@chakra-ui/react"
 import { Head, BlitzLayout } from "blitz"
 import { ReactNode } from "react"
 
@@ -6,7 +7,7 @@ const Layout: BlitzLayout<{ title?: string; children?: ReactNode }> = ({ title, 
     <>
       <Head>
         <title>{title || "blitz-dev"}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/abst icon.ico" />
       </Head>
 
       {children}
