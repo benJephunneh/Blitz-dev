@@ -1,14 +1,15 @@
-import { Button, FormControl, HStack, Input, Select, VStack } from "@chakra-ui/react"
-import { FORM_ERROR } from "app/core/components/Form"
-import { useMutation } from "blitz"
+import { PromiseReturnType, useMutation } from "blitz"
 import { useForm } from "react-hook-form"
+import { Button, FormControl, HStack, Input, Select, VStack } from "@chakra-ui/react"
+import Form, { FORM_ERROR } from "app/core/components/Form"
 import signup from "../mutations/signup"
+import { FC } from "react"
 
 type SignupFormProps = {
-  onSuccess?: () => void
+  onSuccess?: (user: PromiseReturnType<typeof signup>) => void
 }
 
-export default function ChakraSignup<SignupFormProps>({ onSuccess }) {
+const ChakraSignup: FC<SignupFormProps> = ({ onSuccess }) => {
   const [signupMutation] = useMutation(signup)
   const {
     handleSubmit,
@@ -16,16 +17,20 @@ export default function ChakraSignup<SignupFormProps>({ onSuccess }) {
     formState: { errors, isSubmitting },
   } = useForm()
 
-  function onSubmit(values: any) {
+  const onSubmit = async (values: any) => {
     return new Promise((resolve) => {
       resolve(signupMutation(values))
     })
-      .then((user) => onSuccess?.(user))
+      .then((user: PromiseReturnType<typeof signup>) => onSuccess?.(user))
       .catch((error) => handleError(error))
   }
 
-  function handleError(error: any) {
-    if (error) {
+  const handleError = (error: any) => {
+    if (error.code === "P2002" && error.meta?.target?.includes("email")) {
+      return { email: "This email is already in use." }
+    } else if (error.code === "P2002" && error.meta?.target?.includes("username")) {
+      return { username: "This username is already in use." }
+    } else {
       return {
         [FORM_ERROR]: "Something is knot rite.",
       }
@@ -33,12 +38,13 @@ export default function ChakraSignup<SignupFormProps>({ onSuccess }) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <FormControl>
         <VStack w="full">
           <Input
             id="username"
             placeholder="Username"
+            type="text"
             {...register("username", { required: true })}
           />
           <Input
@@ -53,7 +59,7 @@ export default function ChakraSignup<SignupFormProps>({ onSuccess }) {
             placeholder="Password"
             {...register("password", { required: true })}
           />
-          <Select id="role" bg="gray.100" w="max-content" defaultValue="Tech">
+          <Select id="role" bg="gray.100" w="max-content" defaultValue="Tech" {...register("role")}>
             <option value="Owner">Owner</option>
             <option value="Admin">Admin</option>
             <option value="Tech">Tech</option>
@@ -65,6 +71,8 @@ export default function ChakraSignup<SignupFormProps>({ onSuccess }) {
           </Button>
         </HStack>
       </FormControl>
-    </form>
+    </Form>
   )
 }
+
+export default ChakraSignup

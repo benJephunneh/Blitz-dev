@@ -2,7 +2,9 @@ import { Box, Container, Grid, GridItem, useColorModeValue } from "@chakra-ui/re
 import { useSession } from "blitz"
 import { useState } from "react"
 import HeaderActions from "./HeaderActions"
+import HeaderDayNight from "./HeaderDayNight"
 import HeaderDrawer from "./HeaderDrawer"
+import HeaderHamburger from "./HeaderHamburger"
 import HeaderLogIn from "./HeaderLogIn"
 import HeaderLogo from "./HeaderLogo"
 import HeaderLogOut from "./HeaderLogOut"
@@ -17,12 +19,13 @@ const Header = () => {
 
   return (
     <>
-      <HeaderDrawer isOpen={drawerIsOpen} onClose={() => setDrawerIsOpen(false)} />
+      {isLoggedIn && <HeaderDrawer isOpen={drawerIsOpen} onClose={() => setDrawerIsOpen(false)} />}
 
       <Box position="sticky" top={0} zIndex={3}>
         <Box
           as="header"
-          py={3}
+          pt={2}
+          pb={5}
           bg={useColorModeValue("white", "gray.700")}
           borderBottom="1px solid"
           borderBottomColor={useColorModeValue("gray.200", "gray.800")}
@@ -30,19 +33,28 @@ const Header = () => {
         >
           <Container maxW="full">
             <Grid
-              templateColumns={{ base: "1fr 1fr", md: "1fr auto 1fr" }}
-              alignItems="center"
-              gap={3}
+              templateAreas={
+                isLoggedIn ? `"logo hamburger 1fr colorMode user"` : `"logo 1fr colorMode user"`
+              }
+              gridTemplateColumns={isLoggedIn ? "50px 50px 1fr 40px 50px" : "200px 1fr 40px 70px"}
+              h={5}
+              color="blackAlpha.700"
             >
-              <GridItem>
-                <HeaderActions toggleDrawer={toggleDrawer} />
-              </GridItem>
-
-              <GridItem>
+              <GridItem area="logo">
                 <HeaderLogo />
               </GridItem>
 
-              <GridItem>
+              {isLoggedIn && (
+                <GridItem area="hamburger">
+                  <HeaderHamburger toggleDrawer={toggleDrawer} />
+                </GridItem>
+              )}
+
+              <GridItem area="colorMode">
+                <HeaderDayNight />
+              </GridItem>
+
+              <GridItem area="user">
                 {isLoggedIn && <HeaderLogOut />}
                 {isLoggedOut && <HeaderLogIn />}
               </GridItem>

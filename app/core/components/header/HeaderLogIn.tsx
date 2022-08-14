@@ -1,35 +1,20 @@
-import {
-  Button,
-  Fade,
-  Flex,
-  HStack,
-  Icon,
-  Menu,
-  MenuButton,
-  MenuList,
-  Spacer,
-  Stack,
-  useToast,
-} from "@chakra-ui/react"
+import { Button, HStack, Icon, Menu, MenuButton, MenuList, Stack, useToast } from "@chakra-ui/react"
 import ChakraLoginForm from "app/auth/components/ChakraLoginForm"
-import LoginForm from "app/auth/components/LoginForm"
 import { Link, Routes, useRouter } from "blitz"
 import { Suspense } from "react"
 import { FaArrowRight, FaChevronDown } from "react-icons/fa"
 
 const HeaderLoginButton = () => {
   return (
-    <Fade in>
-      <MenuButton
-        as={Button}
-        size="sm"
-        variant="ghost"
-        px={1}
-        rightIcon={<Icon pr={1} as={FaChevronDown} />}
-      >
-        Log in
-      </MenuButton>
-    </Fade>
+    <MenuButton
+      as={Button}
+      size="sm"
+      variant="ghost"
+      px={1}
+      rightIcon={<Icon pr={1} as={FaChevronDown} />}
+    >
+      Log in
+    </MenuButton>
   )
 }
 

@@ -2,6 +2,7 @@ import { Suspense } from "react"
 import { Head, Link, usePaginatedQuery, useRouter, BlitzPage, Routes } from "blitz"
 import Layout from "app/core/layouts/Layout"
 import getCustomers from "app/customers/queries/getCustomers"
+import { Button } from "@chakra-ui/react"
 
 const ITEMS_PER_PAGE = 100
 
@@ -31,12 +32,15 @@ export const CustomersList = () => {
         ))}
       </ul>
 
-      <button disabled={page === 0} onClick={goToPreviousPage}>
+      <Button disabled={page === 0} onClick={goToPreviousPage}>
         Previous
-      </button>
-      <button disabled={!hasMore} onClick={goToNextPage}>
+      </Button>
+      <Button variant="ghost" onClick={() => router.push(Routes.NewCustomerPage())}>
+        Create Customer
+      </Button>
+      <Button disabled={!hasMore} onClick={goToNextPage}>
         Next
-      </button>
+      </Button>
     </div>
   )
 }
@@ -49,11 +53,7 @@ const CustomersPage: BlitzPage = () => {
       </Head>
 
       <div>
-        <p>
-          <Link href={Routes.NewCustomerPage()}>
-            <a>Create Customer</a>
-          </Link>
-        </p>
+        <p></p>
 
         <Suspense fallback={<div>Loading...</div>}>
           <CustomersList />
@@ -63,7 +63,7 @@ const CustomersPage: BlitzPage = () => {
   )
 }
 
-// CustomersPage.authenticate = true
+CustomersPage.authenticate = false
 CustomersPage.getLayout = (page) => <Layout>{page}</Layout>
 
 export default CustomersPage

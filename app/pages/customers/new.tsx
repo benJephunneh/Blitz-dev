@@ -40,7 +40,7 @@ const NewCustomerPage: BlitzPage = () => {
   )
 }
 
-NewCustomerPage.authenticate = true
+NewCustomerPage.authenticate = false // false for dev, only
 NewCustomerPage.getLayout = (page) => <Layout title={"Create New Customer"}>{page}</Layout>
 
 export default NewCustomerPage

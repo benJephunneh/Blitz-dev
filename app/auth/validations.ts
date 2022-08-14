@@ -13,7 +13,7 @@ export const password = z
   .max(100)
   .transform((str) => str.trim())
 
-export const role = z.any()
+export const role = z.string()
 
 export const Signup = z.object({
   username,

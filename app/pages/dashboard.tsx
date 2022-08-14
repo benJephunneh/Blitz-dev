@@ -99,7 +99,7 @@ const Dashboard: BlitzPage = () => {
   const branch = "master/dev/chakra/chakra-rhf"
   const session = useSession({ suspense: false })
   const isLoggedIn = !!session.userId
-  const currentUser = useCurrentUser()
+  const currentUser = useCurrentUser({ suspense: false })
 
   return (
     <>

@@ -10,6 +10,8 @@ import {
   Heading,
   HStack,
   Icon,
+  Image,
+  SimpleGrid,
   Text,
   useColorModeValue,
   VStack,
@@ -17,6 +19,7 @@ import {
 import PlainLayout from "app/core/layouts/PlainLayout"
 import { IconType } from "react-icons"
 import { FcConferenceCall, FcGlobe } from "react-icons/fc"
+import Splitscreen from "app/core/components/Splitscreen"
 
 type IconCardProps = {
   icon: IconType
@@ -99,52 +102,54 @@ const Home: BlitzPage = () => {
   // Bring over apalacheeseptic.com
   const branch = "master/dev/chakra/chakra-rhf"
 
+  const user = useCurrentUser({ suspense: false })
   const session = useSession({ suspense: false })
   const isLoggedIn = !!session.userId
 
   return (
     <>
-      <Box bg={useColorModeValue("gray.50", "gray.800")}>
-        <Container as="main" maxWidth="container.sm" py={{ base: 12, md: 20 }}>
-          <Flex height="75vh" paddingY={20}>
-            <VStack width="full" height="full" padding={10} spacing={10} alignItems="flex-start">
-              <IconCard icon={FcConferenceCall} title="Customers" text="View list of customers" />
-              <IconCard icon={FcGlobe} title="Locations" text="View customer locations" />
-            </VStack>
-            <VStack
-              width="full"
-              height="full"
-              padding={10}
-              spacing={10}
-              alignItems="flex-start"
-              background="gray.50"
-            ></VStack>
-          </Flex>
-
-          <footer>
-            <Suspense>
-              <HStack spacing={2}>
-                <Button as="a" href="https://github.com/benJephunneh/Blitz-dev">
-                  Github - Blitz-dev
-                </Button>
-                <Button as="a" href="https://www.apalacheeseptic.com/">
-                  Apalachee Backhoe
-                </Button>
-              </HStack>
-            </Suspense>
-          </footer>
-
-          <footer>
-            <a
-              href="https://blitzjs.com?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Powered by Blitz.js
-            </a>
-          </footer>
-        </Container>
+      <Box bg={useColorModeValue("gray.50", "gray.800")} w="100%" h={150}>
+        <Image
+          src="./Wakulla-River-banner2.jpg"
+          h={200}
+          objectFit="cover"
+          alt="Wakulla River"
+          w="100%"
+        />
       </Box>
+
+      <Container as="main" maxW="container.lg" py={{ base: 12, md: 20 }}>
+        <Heading fontSize="sm" color="gray.500" textTransform="uppercase" mb={4}>
+          These things
+        </Heading>
+        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={4}>
+          <IconCard icon={FcConferenceCall} title="Customers" text="View list of customers" />
+          <IconCard icon={FcGlobe} title="Locations" text="View customer locations" />
+        </SimpleGrid>
+      </Container>
+
+      <footer>
+        <Suspense>
+          <HStack spacing={2}>
+            <Button as="a" href="https://github.com/benJephunneh/Blitz-dev">
+              Github - Blitz-dev
+            </Button>
+            <Button as="a" href="https://www.apalacheeseptic.com/">
+              Apalachee Backhoe
+            </Button>
+          </HStack>
+        </Suspense>
+      </footer>
+
+      <footer>
+        <a
+          href="https://blitzjs.com?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Powered by Blitz.js
+        </a>
+      </footer>
     </>
   )
 }
