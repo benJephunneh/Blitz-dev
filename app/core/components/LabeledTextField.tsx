@@ -1,5 +1,5 @@
 import { forwardRef, PropsWithoutRef, ComponentPropsWithoutRef } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, useFormContext } from "react-hook-form"
 import { Input } from "@chakra-ui/input"
 import { FormControl, FormLabel } from "@chakra-ui/form-control"
 import { FormErrorMessage } from "@chakra-ui/react"
@@ -20,9 +20,9 @@ export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldPro
     const {
       register,
       formState: { isSubmitting, errors },
-    } = useForm()
+    } = useFormContext()
 
-    const error = Array.isArray(errors) ? errors.join(", ") : errors[name]!.message || errors[name]
+    const error = Array.isArray(errors) ? errors.join(", ") : errors!.message || errors[name]
 
     return (
       <FormControl {...outerProps}>

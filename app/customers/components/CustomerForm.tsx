@@ -1,3 +1,4 @@
+import { Flex, Text } from "@chakra-ui/react"
 import { Form, FormProps } from "app/core/components/Form"
 import { LabeledTextField } from "app/core/components/LabeledTextField"
 import { z } from "zod"

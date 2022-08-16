@@ -66,7 +66,15 @@ export function Form<S extends z.ZodType<any, any>>({
         )}
 
         {submitText && (
-          <Button w="full" bg="green.200" type="submit" disabled={ctx.formState.isSubmitting}>
+          <Button
+            w="full"
+            bg="#009a4c"
+            textColor="#eeea31"
+            shadow="dark-lg"
+            type="submit"
+            disabled={ctx.formState.isSubmitting}
+            _hover={{ bg: "#eeea31", textColor: "#009a4c" }}
+          >
             {submitText}
           </Button>
         )}

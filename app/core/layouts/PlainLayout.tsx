@@ -11,7 +11,10 @@ type PlainLayoutProps = {
 const PlainLayout: BlitzLayout<PlainLayoutProps> = ({ title, description, children }) => {
   return (
     <>
-      <Header />
+      <Head>
+        <title>{title}</title>
+      </Head>
+      <Header title={title} />
 
       {children}
     </>

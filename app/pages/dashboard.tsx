@@ -17,6 +17,7 @@ import {
 import PlainLayout from "app/core/layouts/PlainLayout"
 import { IconType } from "react-icons"
 import { FcConferenceCall, FcGlobe } from "react-icons/fc"
+import IconCard from "app/core/components/IconCard"
 
 type IconCardProps = {
   icon: IconType
@@ -26,25 +27,25 @@ type IconCardProps = {
   actionText?: string
 }
 
-const IconCard: FC<IconCardProps> = ({ icon, title, text, actionLink, actionText }) => {
-  return (
-    <Box bg={useColorModeValue("white", "gray.800")} p={5} borderRadius="md" textAlign="center">
-      <Icon as={icon} w={8} h={8} mb={2} />
-      <Heading size="md" mb={2}>
-        {title}
-      </Heading>
-      <Text opacity="0.8">{text}</Text>
-
-      {actionLink && actionText && (
-        <Link href={actionLink} passHref>
-          <Button isFullWidth as="a" mt={5}>
-            {actionText}
-          </Button>
-        </Link>
-      )}
-    </Box>
-  )
-}
+// const IconCard: FC<IconCardProps> = ({ icon, title, text, actionLink, actionText }) => {
+//   return (
+//     <Box bg={useColorModeValue("white", "gray.800")} p={5} borderRadius="md" textAlign="center">
+//       <Icon as={icon} w={8} h={8} mb={2} />
+//       <Heading size="md" mb={2}>
+//         {title}
+//       </Heading>
+//       <Text opacity="0.8">{text}</Text>
+//
+//       {actionLink && actionText && (
+//         <Link href={actionLink} passHref>
+//           <Button isFullWidth as="a" mt={5}>
+//             {actionText}
+//           </Button>
+//         </Link>
+//       )}
+//     </Box>
+//   )
+// }
 
 const UserInfo = () => {
   const currentUser = useCurrentUser()
@@ -160,6 +161,10 @@ const Dashboard: BlitzPage = () => {
 
 Dashboard.suppressFirstRenderFlicker = true
 Dashboard.authenticate = { redirectTo: Routes.Home() }
-Dashboard.getLayout = (page) => <PlainLayout title="Dashboard">{page}</PlainLayout>
+Dashboard.getLayout = (page) => (
+  <PlainLayout title="Dashboard" description="Home page for logged-in users">
+    {page}
+  </PlainLayout>
+)
 
 export default Dashboard

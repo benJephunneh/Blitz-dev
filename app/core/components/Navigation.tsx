@@ -100,7 +100,7 @@ const Navigation = () => {
           </NavigationItem>
         </NavigationSection>
         <NavigationSection>
-          <NavigationItem route={Routes.Home()} icon={FcConferenceCall}>
+          <NavigationItem route={Routes.CustomersPage()} icon={FcConferenceCall}>
             Customers
           </NavigationItem>
         </NavigationSection>

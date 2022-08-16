@@ -1,4 +1,4 @@
-import { Box, Container, Grid, GridItem, useColorModeValue } from "@chakra-ui/react"
+import { Box, Container, Grid, GridItem, Text, useColorModeValue } from "@chakra-ui/react"
 import { useSession } from "blitz"
 import { useState } from "react"
 import HeaderActions from "./HeaderActions"
@@ -9,7 +9,7 @@ import HeaderLogIn from "./HeaderLogIn"
 import HeaderLogo from "./HeaderLogo"
 import HeaderLogOut from "./HeaderLogOut"
 
-const Header = () => {
+const Header = ({ title }) => {
   const session = useSession({ suspense: false })
   const [drawerIsOpen, setDrawerIsOpen] = useState(false)
   const toggleDrawer = () => setDrawerIsOpen((state) => !state)
@@ -34,7 +34,7 @@ const Header = () => {
           <Container maxW="full">
             <Grid
               templateAreas={
-                isLoggedIn ? `"logo hamburger 1fr colorMode user"` : `"logo 1fr colorMode user"`
+                isLoggedIn ? `"logo hamburger title colorMode user"` : `"logo 1fr colorMode user"`
               }
               gridTemplateColumns={isLoggedIn ? "50px 50px 1fr 40px 50px" : "200px 1fr 40px 70px"}
               h={5}
@@ -53,6 +53,14 @@ const Header = () => {
               <GridItem area="colorMode">
                 <HeaderDayNight />
               </GridItem>
+
+              {title && (
+                <GridItem area="title">
+                  <Text textAlign="center" fontSize="xl" fontWeight="bold">
+                    {title}
+                  </Text>
+                </GridItem>
+              )}
 
               <GridItem area="user">
                 {isLoggedIn && <HeaderLogOut />}

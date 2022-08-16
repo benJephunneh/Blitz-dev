@@ -156,6 +156,6 @@ const Home: BlitzPage = () => {
 
 Home.suppressFirstRenderFlicker = true
 Home.redirectAuthenticatedTo = Routes.Dashboard()
-Home.getLayout = (page) => <PlainLayout title="Home">{page}</PlainLayout>
+Home.getLayout = (page) => <PlainLayout>{page}</PlainLayout>
 
 export default Home

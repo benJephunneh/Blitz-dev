@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { Head, Link, useRouter, useQuery, useParam, BlitzPage, useMutation, Routes } from "blitz"
-import Layout from "app/core/layouts/Layout"
+import PlainLayout from "app/core/layouts/PlainLayout"
 import getCustomer from "app/customers/queries/getCustomer"
 import deleteCustomer from "app/customers/mutations/deleteCustomer"
 
@@ -9,20 +9,16 @@ export const Customer = () => {
   const customerId = useParam("customerId", "number")
   const [deleteCustomerMutation] = useMutation(deleteCustomer)
   const [customer] = useQuery(getCustomer, { id: customerId })
+  const fullname = `${customer.firstname} ${customer.lastname}`
 
   return (
     <>
       <Head>
-        <title>
-          {customer.firstname} {customer.lastname}
-        </title>
+        <title>{fullname}</title>
       </Head>
 
       <div>
-        <h1>
-          {customer.firstname} {customer.lastname}
-        </h1>
-        <pre>{JSON.stringify(customer, null, 2)}</pre>
+        <h1>{fullname}</h1>
 
         <Link href={Routes.EditCustomerPage({ customerId: customer.id })}>
           <a>Edit</a>
@@ -62,6 +58,6 @@ const ShowCustomerPage: BlitzPage = () => {
 }
 
 ShowCustomerPage.authenticate = true
-ShowCustomerPage.getLayout = (page) => <Layout>{page}</Layout>
+ShowCustomerPage.getLayout = (page) => <PlainLayout>{page}</PlainLayout>
 
 export default ShowCustomerPage

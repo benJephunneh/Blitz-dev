@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { Head, Link, usePaginatedQuery, useRouter, BlitzPage, Routes } from "blitz"
-import Layout from "app/core/layouts/Layout"
+import PlainLayout from "app/core/layouts/PlainLayout"
 import getCustomers from "app/customers/queries/getCustomers"
 import { Button } from "@chakra-ui/react"
 
@@ -64,6 +64,6 @@ const CustomersPage: BlitzPage = () => {
 }
 
 CustomersPage.authenticate = false
-CustomersPage.getLayout = (page) => <Layout>{page}</Layout>
+CustomersPage.getLayout = (page) => <PlainLayout title="Customers">{page}</PlainLayout>
 
 export default CustomersPage
