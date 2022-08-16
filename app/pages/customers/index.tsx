@@ -2,7 +2,9 @@ import { Suspense } from "react"
 import { Head, Link, usePaginatedQuery, useRouter, BlitzPage, Routes } from "blitz"
 import PlainLayout from "app/core/layouts/PlainLayout"
 import getCustomers from "app/customers/queries/getCustomers"
-import { Button } from "@chakra-ui/react"
+import { Button, ButtonGroup, Flex, VStack } from "@chakra-ui/react"
+import { TiArrowLeft, TiArrowRight, TiPlus } from "react-icons/ti"
+import CustomerEntry from "app/customers/components/CustomerEntry"
 
 const ITEMS_PER_PAGE = 100
 
@@ -19,29 +21,34 @@ export const CustomersList = () => {
   const goToNextPage = () => router.push({ query: { page: page + 1 } })
 
   return (
-    <div>
-      <ul>
-        {customers.map((customer) => (
-          <li key={customer.id}>
-            <Link href={Routes.ShowCustomerPage({ customerId: customer.id })}>
-              <a>
-                {customer.firstname} {customer.lastname}
-              </a>
-            </Link>
-          </li>
-        ))}
-      </ul>
+    <Flex w="auto" position="relative">
+      <VStack alignItems="left" spacing={2}>
+        <VStack alignItems="left" spacing={0}>
+          {customers.map((customer) => (
+            <CustomerEntry customer={customer} />
+          ))}
+        </VStack>
 
-      <Button disabled={page === 0} onClick={goToPreviousPage}>
-        Previous
-      </Button>
-      <Button variant="ghost" onClick={() => router.push(Routes.NewCustomerPage())}>
-        Create Customer
-      </Button>
-      <Button disabled={!hasMore} onClick={goToNextPage}>
-        Next
-      </Button>
-    </div>
+        <ButtonGroup isAttached>
+          <Button disabled={page === 0} leftIcon={<TiArrowLeft />} onClick={goToPreviousPage}>
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            bg="#009a4c"
+            textColor="#eeea31"
+            rightIcon={<TiPlus />}
+            onClick={() => router.push(Routes.NewCustomerPage())}
+            _hover={{ bg: "#eeea31", textColor: "#009a4c" }}
+          >
+            Create Customer
+          </Button>
+          <Button disabled={!hasMore} rightIcon={<TiArrowRight />} onClick={goToNextPage}>
+            Next
+          </Button>
+        </ButtonGroup>
+      </VStack>
+    </Flex>
   )
 }
 

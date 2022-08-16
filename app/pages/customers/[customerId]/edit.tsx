@@ -4,7 +4,7 @@ import PlainLayout from "app/core/layouts/PlainLayout"
 import getCustomer from "app/customers/queries/getCustomer"
 import updateCustomer from "app/customers/mutations/updateCustomer"
 import { CustomerForm, FORM_ERROR } from "app/customers/components/CustomerForm"
-import { Button, Flex, Grid, GridItem, VStack } from "@chakra-ui/react"
+import { Button, Flex, Grid, GridItem, Text, VStack } from "@chakra-ui/react"
 import GradientBorder from "app/core/components/GradientBorder"
 import { ImCross } from "react-icons/im"
 
@@ -41,52 +41,40 @@ export const EditCustomer = () => {
         </title>
       </Head>
 
-      <Flex m={5} w="auto" position="relative" overflow="hidden">
-        <Grid
-          w="full"
-          justifyItems="left"
-          alignItems="center"
-          templateAreas={`"form submission"`}
-          gridTemplateColumns={"1fr 1fr"}
-          columnGap={3}
-        >
-          <GridItem area="form">
-            <VStack spacing={2}>
-              <CustomerForm
-                submitText="Update Customer"
-                // TODO use a zod schema for form validation
-                //  - Tip: extract mutation's schema into a shared `validations.ts` file and
-                //         then import and use it here
-                // schema={UpdateCustomer}
-                initialValues={customer}
-                onChange={handleChange}
-                onSubmit={async (values) => {
-                  try {
-                    const updated = await updateCustomerMutation({
-                      id: customer.id,
-                      ...values,
-                    })
-                    await setQueryData(updated)
-                    router.push(Routes.ShowCustomerPage({ customerId: updated.id }))
-                  } catch (error: any) {
-                    console.error(error)
-                    return {
-                      [FORM_ERROR]: error.toString(),
-                    }
+      <Flex w="auto" position="relative">
+        <Flex w="full" justifyItems="left" alignItems="center">
+          <VStack spacing={2}>
+            <CustomerForm
+              submitText="Update Customer"
+              // TODO use a zod schema for form validation
+              //  - Tip: extract mutation's schema into a shared `validations.ts` file and
+              //         then import and use it here
+              // schema={UpdateCustomer}
+              initialValues={customer}
+              onChange={handleChange}
+              onSubmit={async (values) => {
+                try {
+                  const updated = await updateCustomerMutation({
+                    id: customer.id,
+                    ...values,
+                  })
+                  await setQueryData(updated)
+                  router.push(Routes.ShowCustomerPage({ customerId: updated.id }))
+                } catch (error: any) {
+                  console.error(error)
+                  return {
+                    [FORM_ERROR]: error.toString(),
                   }
-                }}
-              />
-              <Link href={Routes.ShowCustomerPage({ customerId: customer.id })}>
-                <Button as="a" color="#ff0a4c" w="full" rightIcon={<ImCross size={10} />}>
-                  Cancel
-                </Button>
-              </Link>
-            </VStack>
-          </GridItem>
-          <GridItem area="submission">
-            <GradientBorder fontSize={40}>{`${firstname} ${lastname}`}</GradientBorder>
-          </GridItem>
-        </Grid>
+                }
+              }}
+            />
+            <Link href={Routes.ShowCustomerPage({ customerId: customer.id })}>
+              <Button as="a" color="#ff0a4c" w="full" rightIcon={<ImCross size={10} />}>
+                Cancel
+              </Button>
+            </Link>
+          </VStack>
+        </Flex>
       </Flex>
     </>
   )

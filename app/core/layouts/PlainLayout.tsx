@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/react"
 import { BlitzLayout, Head } from "blitz"
 import { ReactNode } from "react"
 import Header from "../components/header/Header"
@@ -16,7 +17,9 @@ const PlainLayout: BlitzLayout<PlainLayoutProps> = ({ title, description, childr
       </Head>
       <Header title={title} />
 
-      {children}
+      <Box p={5} overflow="hidden">
+        {children}
+      </Box>
     </>
   )
 }

@@ -22,13 +22,13 @@ export const NewCustomer = () => {
   }
 
   return (
-    <Flex m={5} w="auto" position="relative" overflow="hidden">
+    <Flex w="auto" position="relative">
       <Grid
         w="full"
         justifyItems="left"
         alignItems="center"
-        templateAreas={`"form submission"`}
-        gridTemplateColumns={"1fr 1fr"}
+        templateAreas={`"form submission ."`}
+        gridTemplateColumns={"1fr 1fr 1fr"}
         columnGap={3}
       >
         <GridItem area="form">
@@ -59,9 +59,6 @@ export const NewCustomer = () => {
               </Button>
             </Link>
           </VStack>
-        </GridItem>
-        <GridItem area="submission">
-          <Text fontSize={40} justifyContent="left">{`${firstname} ${lastname}`}</Text>
         </GridItem>
       </Grid>
     </Flex>
