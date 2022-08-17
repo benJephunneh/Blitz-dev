@@ -25,7 +25,7 @@ export const LocationsList = () => {
         {locations.map((location) => (
           <li key={location.id}>
             <Link href={Routes.ShowLocationPage({ locationId: location.id })}>
-              <a>{location.name}</a>
+              <a>{location.number}</a>
             </Link>
           </li>
         ))}

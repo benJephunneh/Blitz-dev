@@ -13,13 +13,13 @@ export const NewCustomer = () => {
   const [createCustomerMutation] = useMutation(createCustomer)
   const [firstname, setFirstname] = useState("")
   const [lastname, setLastname] = useState("")
-  const handleChange = (e) => {
-    if (e.target.name === "firstname") {
-      setFirstname(e.target.value)
-    } else if (e.target.name === "lastname") {
-      setLastname(e.target.value)
-    }
-  }
+  // const handleChange = (e) => {
+  //   if (e.target.name === "firstname") {
+  //     setFirstname(e.target.value)
+  //   } else if (e.target.name === "lastname") {
+  //     setLastname(e.target.value)
+  //   }
+  // }
 
   return (
     <Flex w="auto" position="relative">
@@ -40,7 +40,6 @@ export const NewCustomer = () => {
               //         then import and use it here
               // schema={CreateCustomer}
               // initialValues={{}}
-              onChange={handleChange}
               onSubmit={async (values) => {
                 try {
                   const customer = await createCustomerMutation(values)

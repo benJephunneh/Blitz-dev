@@ -12,7 +12,7 @@ export const CustomersList = () => {
   const router = useRouter()
   const page = Number(router.query.page) || 0
   const [{ customers, hasMore }] = usePaginatedQuery(getCustomers, {
-    orderBy: { id: "asc" },
+    orderBy: { lastname: "asc" },
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
   })
@@ -23,7 +23,7 @@ export const CustomersList = () => {
   return (
     <Flex w="auto" position="relative">
       <VStack alignItems="left" spacing={2}>
-        <VStack alignItems="left" spacing={0}>
+        <VStack justify="left" alignItems="center" spacing={0}>
           {customers.map((customer) => (
             <CustomerEntry customer={customer} />
           ))}

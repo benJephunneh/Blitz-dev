@@ -7,6 +7,9 @@ import { CustomerForm, FORM_ERROR } from "app/customers/components/CustomerForm"
 import { Button, Flex, Grid, GridItem, Text, VStack } from "@chakra-ui/react"
 import GradientBorder from "app/core/components/GradientBorder"
 import { ImCross } from "react-icons/im"
+import deleteCustomer from "app/customers/mutations/deleteCustomer"
+import { MdDelete } from "react-icons/md"
+import { TiArrowBack } from "react-icons/ti"
 
 export const EditCustomer = () => {
   const router = useRouter()
@@ -20,18 +23,19 @@ export const EditCustomer = () => {
     }
   )
   const [updateCustomerMutation] = useMutation(updateCustomer)
+  const [deleteCustomerMutation] = useMutation(deleteCustomer)
   // const fullname = `${customer.firstname} ${customer.lastname}`
   const [firstname, setFirstname] = useState(customer.firstname)
   const [lastname, setLastname] = useState(customer.lastname)
-  const handleChange = (e) => {
-    if (e.target.name === "firstname") {
-      console.log(e.target.value)
-      setFirstname(e.target.value)
-    } else if (e.target.name === "lastname") {
-      console.log(e.target.value)
-      setLastname(e.target.value)
-    }
-  }
+  // const handleChange = (e) => {
+  //   if (e.target.name === "firstname") {
+  //     console.log(e.target.value)
+  //     setFirstname(e.target.value)
+  //   } else if (e.target.name === "lastname") {
+  //     console.log(e.target.value)
+  //     setLastname(e.target.value)
+  //   }
+  // }
 
   return (
     <>
@@ -51,7 +55,6 @@ export const EditCustomer = () => {
               //         then import and use it here
               // schema={UpdateCustomer}
               initialValues={customer}
-              onChange={handleChange}
               onSubmit={async (values) => {
                 try {
                   const updated = await updateCustomerMutation({
@@ -69,10 +72,23 @@ export const EditCustomer = () => {
               }}
             />
             <Link href={Routes.ShowCustomerPage({ customerId: customer.id })}>
-              <Button as="a" color="#ff0a4c" w="full" rightIcon={<ImCross size={10} />}>
+              <Button as="a" color="#009a4c" w="full" rightIcon={<TiArrowBack />}>
                 Cancel
               </Button>
             </Link>
+            <Button
+              w="full"
+              colorScheme="red"
+              rightIcon={<MdDelete />}
+              onClick={async () => {
+                if (window.confirm("This will be deleted")) {
+                  await deleteCustomerMutation({ id: customer.id })
+                  router.push(Routes.CustomersPage())
+                }
+              }}
+            >
+              Delete
+            </Button>
           </VStack>
         </Flex>
       </Flex>
