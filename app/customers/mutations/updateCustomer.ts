@@ -1,12 +1,6 @@
 import { resolver } from "blitz"
 import db from "db"
-import { z } from "zod"
-
-const UpdateCustomer = z.object({
-  id: z.number(),
-  firstname: z.string(),
-  lastname: z.string(),
-})
+import { UpdateCustomer } from "../validations"
 
 export default resolver.pipe(
   resolver.zod(UpdateCustomer),

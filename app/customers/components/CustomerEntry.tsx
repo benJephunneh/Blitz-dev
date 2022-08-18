@@ -26,9 +26,7 @@ const CustomerEntry: FC<CustomerEntryProps> = ({ customer }) => {
             borderLeft={0}
             borderRight={0}
             borderTop={0}
-            onClick={() => {
-              router.push(Routes.ShowCustomerPage({ customerId: customer.id }))
-            }}
+            onClick={() => router.push(Routes.ShowCustomerPage({ customerId: customer.id }))}
           >{`${customer.firstname} ${customer.lastname}`}</Button>
         </GridItem>
         <GridItem area="buttons">
@@ -43,9 +41,7 @@ const CustomerEntry: FC<CustomerEntryProps> = ({ customer }) => {
               borderLeft={0}
               borderRight={0}
               borderTop={0}
-              onClick={() => {
-                router.push(Routes.EditCustomerPage({ customerId: customer.id }))
-              }}
+              onClick={() => router.push(Routes.EditCustomerPage({ customerId: customer.id }))}
             />
             <IconButton
               aria-label="View locations"
@@ -56,9 +52,7 @@ const CustomerEntry: FC<CustomerEntryProps> = ({ customer }) => {
               borderLeft={0}
               borderRight={0}
               borderTop={0}
-              onClick={() => {
-                router.push(Routes.LocationsPage({ customerId: customer.id }))
-              }}
+              onClick={() => router.push(Routes.LocationsPage({ customerId: customer.id }))}
             />
             <IconButton
               aria-label="View jobs"
@@ -69,9 +63,7 @@ const CustomerEntry: FC<CustomerEntryProps> = ({ customer }) => {
               borderLeft={0}
               borderRight={0}
               borderTop={0}
-              onClick={() => {
-                router.push(Routes.ShowCustomerPage({ customerId: customer.id }))
-              }}
+              onClick={() => router.push(Routes.ShowCustomerPage({ customerId: customer.id }))}
             />
             <IconButton
               aria-label="View estimates"
@@ -82,9 +74,7 @@ const CustomerEntry: FC<CustomerEntryProps> = ({ customer }) => {
               borderLeft={0}
               borderRight={0}
               borderTop={0}
-              onClick={() => {
-                router.push(Routes.ShowCustomerPage({ customerId: customer.id }))
-              }}
+              onClick={() => router.push(Routes.ShowCustomerPage({ customerId: customer.id }))}
             />
             <IconButton
               aria-label="View invoices"
@@ -95,9 +85,7 @@ const CustomerEntry: FC<CustomerEntryProps> = ({ customer }) => {
               borderLeft={0}
               borderRight={0}
               borderTop={0}
-              onClick={() => {
-                router.push(Routes.ShowCustomerPage({ customerId: customer.id }))
-              }}
+              onClick={() => router.push(Routes.ShowCustomerPage({ customerId: customer.id }))}
             />
           </ButtonGroup>
         </GridItem>

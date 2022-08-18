@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { Head, Link, usePaginatedQuery, useRouter, useParam, BlitzPage, Routes } from "blitz"
-import Layout from "app/core/layouts/Layout"
+import SidebarLayout from "app/core/layouts/SidebarLayout"
 import getLocations from "app/locations/queries/getLocations"
 
 const ITEMS_PER_PAGE = 100
@@ -11,7 +11,7 @@ export const LocationsList = () => {
   const customerId = useParam("customerId", "number")
   const [{ locations, hasMore }] = usePaginatedQuery(getLocations, {
     where: { customer: { id: customerId! } },
-    orderBy: { id: "asc" },
+    orderBy: { street: "asc" },
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
   })
@@ -24,7 +24,9 @@ export const LocationsList = () => {
       <ul>
         {locations.map((location) => (
           <li key={location.id}>
-            <Link href={Routes.ShowLocationPage({ locationId: location.id })}>
+            <Link
+              href={Routes.ShowLocationPage({ customerId: customerId!, locationId: location.id })}
+            >
               <a>{location.number}</a>
             </Link>
           </li>
@@ -66,6 +68,6 @@ const LocationsPage: BlitzPage = () => {
 }
 
 LocationsPage.authenticate = true
-LocationsPage.getLayout = (page) => <Layout>{page}</Layout>
+LocationsPage.getLayout = (page) => <SidebarLayout>{page}</SidebarLayout>
 
 export default LocationsPage

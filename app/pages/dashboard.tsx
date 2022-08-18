@@ -14,7 +14,7 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react"
-import PlainLayout from "app/core/layouts/PlainLayout"
+import SidebarLayout from "app/core/layouts/SidebarLayout"
 import { IconType } from "react-icons"
 import { FcConferenceCall, FcGlobe } from "react-icons/fc"
 import IconCard from "app/core/components/IconCard"
@@ -160,11 +160,11 @@ const Dashboard: BlitzPage = () => {
 }
 
 Dashboard.suppressFirstRenderFlicker = true
-Dashboard.authenticate = { redirectTo: Routes.Home() }
+Dashboard.authenticate = { redirectTo: Routes.LoginPage() }
 Dashboard.getLayout = (page) => (
-  <PlainLayout title="Dashboard" description="Home page for logged-in users">
+  <SidebarLayout title="Dashboard" description="Home page for logged-in users">
     {page}
-  </PlainLayout>
+  </SidebarLayout>
 )
 
 export default Dashboard

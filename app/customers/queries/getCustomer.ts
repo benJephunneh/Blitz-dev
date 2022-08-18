@@ -9,7 +9,7 @@ const GetCustomer = z.object({
 
 export default resolver.pipe(resolver.zod(GetCustomer), resolver.authorize(), async ({ id }) => {
   // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-  const customer = await db.customer.findFirst({ where: { id } })
+  const customer = await db.customer.findFirst({ where: { id }, include: { locations: true } })
 
   if (!customer) throw new NotFoundError()
 

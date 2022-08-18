@@ -1,16 +1,19 @@
-import { Suspense } from "react"
-import { Head, useRouter, useQuery, useParam, BlitzPage, Routes } from "blitz"
+import { Suspense, useState } from "react"
+import { Head, useRouter, useQuery, useParam, BlitzPage, Routes, Link } from "blitz"
 import PlainLayout from "app/core/layouts/PlainLayout"
 import getCustomer from "app/customers/queries/getCustomer"
 import {
   Button,
+  ButtonGroup,
   HStack,
   IconButton,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
+  Text,
   Tabs,
+  VStack,
 } from "@chakra-ui/react"
 import { FaEdit, FaPlus } from "react-icons/fa"
 import { TiArrowBack } from "react-icons/ti"
@@ -18,13 +21,14 @@ import getLocations from "app/locations/queries/getLocations"
 
 export const Customer = () => {
   const router = useRouter()
+  const [sortBy, setSortBy] = useState("street")
   const customerId = useParam("customerId", "number")
   const [customer] = useQuery(getCustomer, { id: customerId })
   const fullname = `${customer.firstname} ${customer.lastname}`
 
   const [{ locations }] = useQuery(getLocations, {
     where: { customerId: customer.id },
-    orderBy: { updatedAt: "desc" },
+    orderBy: { street: "asc" },
   })
 
   return (
@@ -33,37 +37,64 @@ export const Customer = () => {
         <title>{fullname}</title>
       </Head>
 
-      <HStack>
-        <Button fontSize={30} variant="ghost" rightIcon={<FaEdit size={15} />}>
-          {fullname}
-        </Button>
-        <Tabs variant="enclosed">
-          <TabList>
-            <Tab>
-              Locations
-              <IconButton
-                aria-label="New location"
-                icon={<FaPlus />}
+      <Tabs variant="enclosed">
+        <TabList>
+          <Tab>
+            <ButtonGroup isAttached>
+              <Button fontSize={30} variant="unstyled">
+                {fullname}
+              </Button>
+              <Button
+                pr={0}
+                fontSize={30}
                 variant="ghost"
-                onFocus={() => {
-                  router.push(Routes.NewLocationPage({ customerId: customer.id }))
-                }}
+                justifyContent="left"
+                leftIcon={<FaEdit size={15} />}
+                onClick={() => router.push(Routes.EditCustomerPage({ customerId: customer.id }))}
               />
+            </ButtonGroup>
+          </Tab>
+          <Tab>Jobs</Tab>
+          <Tab>Estimates</Tab>
+          <Tab>Invoices</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <Tab>
+              <VStack alignItems="left" spacing={2}>
+                <Button
+                  pl={0}
+                  aria-label="Add location"
+                  rightIcon={<FaPlus />}
+                  variant="link"
+                  color="#009a4c"
+                  justifyContent="left"
+                  onClick={() => router.push(Routes.NewLocationPage({ customerId: customer.id }))}
+                >
+                  Add location
+                </Button>
+                {locations.map((location) => (
+                  <Button
+                    pl={0}
+                    variant="link"
+                    justifyContent="left"
+                    onClick={() =>
+                      router.push(
+                        Routes.ShowLocationPage({
+                          customerId: customer.id,
+                          locationId: location.id,
+                        })
+                      )
+                    }
+                  >
+                    {`${location.number} ${location.street}, ${location.city} ${location.zipcode}`}
+                  </Button>
+                ))}
+              </VStack>
             </Tab>
-            <Tab>Jobs</Tab>
-            <Tab>Estimates</Tab>
-            <Tab>Invoices</Tab>
-          </TabList>
-          <TabPanels>
-            <TabPanel>
-              {locations.map(
-                (location) =>
-                  `${location.number} ${location.street}, ${location.city}  ${location.zipcode}`
-              )}
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-      </HStack>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
     </>
   )
 }
@@ -74,6 +105,7 @@ const ShowCustomerPage: BlitzPage = () => {
     <div>
       <Button
         leftIcon={<TiArrowBack />}
+        variant="ghost"
         onClick={() => {
           router.push(Routes.CustomersPage())
         }}
@@ -89,6 +121,6 @@ const ShowCustomerPage: BlitzPage = () => {
 }
 
 ShowCustomerPage.authenticate = true
-ShowCustomerPage.getLayout = (page) => <PlainLayout>{page}</PlainLayout>
+ShowCustomerPage.getLayout = (page) => <PlainLayout title="Customer">{page}</PlainLayout>
 
 export default ShowCustomerPage

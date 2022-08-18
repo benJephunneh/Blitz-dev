@@ -1,6 +1,6 @@
 import { Suspense } from "react"
 import { Head, Link, usePaginatedQuery, useRouter, BlitzPage, Routes } from "blitz"
-import PlainLayout from "app/core/layouts/PlainLayout"
+import SidebarLayout from "app/core/layouts/SidebarLayout"
 import getCustomers from "app/customers/queries/getCustomers"
 import { Button, ButtonGroup, Flex, VStack } from "@chakra-ui/react"
 import { TiArrowLeft, TiArrowRight, TiPlus } from "react-icons/ti"
@@ -70,7 +70,7 @@ const CustomersPage: BlitzPage = () => {
   )
 }
 
-CustomersPage.authenticate = false
-CustomersPage.getLayout = (page) => <PlainLayout title="Customers">{page}</PlainLayout>
+CustomersPage.authenticate = { redirectTo: Routes.LoginPage() }
+CustomersPage.getLayout = (page) => <SidebarLayout title="Customers">{page}</SidebarLayout>
 
 export default CustomersPage

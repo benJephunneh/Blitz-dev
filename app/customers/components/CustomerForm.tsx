@@ -6,10 +6,6 @@ import { useForm } from "react-final-form"
 import { z } from "zod"
 export { FORM_ERROR } from "app/core/components/Form"
 
-type FormValues = {
-  firstname: string
-}
-
 export function CustomerForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
   return (
     <Form<S> {...props}>

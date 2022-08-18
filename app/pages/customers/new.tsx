@@ -1,6 +1,6 @@
 import { Suspense, useState } from "react"
 import { Link, useRouter, useMutation, BlitzPage, Routes } from "blitz"
-import { Button, Flex, Grid, GridItem, Text, VStack } from "@chakra-ui/react"
+import { Button, Flex, Grid, GridItem, Text, useToast, VStack } from "@chakra-ui/react"
 import { ImCross } from "react-icons/im"
 import createCustomer from "app/customers/mutations/createCustomer"
 import { CustomerForm, FORM_ERROR } from "app/customers/components/CustomerForm"
@@ -11,8 +11,9 @@ import { Customer } from "./[customerId]"
 export const NewCustomer = () => {
   const router = useRouter()
   const [createCustomerMutation] = useMutation(createCustomer)
-  const [firstname, setFirstname] = useState("")
-  const [lastname, setLastname] = useState("")
+  // const [firstname, setFirstname] = useState("")
+  // const [lastname, setLastname] = useState("")
+  const toast = useToast()
   // const handleChange = (e) => {
   //   if (e.target.name === "firstname") {
   //     setFirstname(e.target.value)
@@ -44,6 +45,11 @@ export const NewCustomer = () => {
                 try {
                   const customer = await createCustomerMutation(values)
                   router.push(Routes.ShowCustomerPage({ customerId: customer.id }))
+                  toast({
+                    title: `${customer.firstname} ${customer.lastname}`,
+                    description: "Successfully created",
+                    status: "success",
+                  })
                 } catch (error: any) {
                   console.error(error)
                   return {

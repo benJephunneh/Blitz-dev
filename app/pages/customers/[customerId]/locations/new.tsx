@@ -1,14 +1,17 @@
-import { Link, useRouter, useMutation, useParam, BlitzPage, Routes } from "blitz"
+import { Link, useRouter, useMutation, useParam, BlitzPage, Routes, useQuery } from "blitz"
 import PlainLayout from "app/core/layouts/PlainLayout"
 import createLocation from "app/locations/mutations/createLocation"
 import { LocationForm, FORM_ERROR } from "app/locations/components/LocationForm"
-import { Button, Flex, Grid, GridItem, VStack } from "@chakra-ui/react"
+import { Button, Flex, Grid, GridItem, useToast, VStack } from "@chakra-ui/react"
 import { ImCross } from "react-icons/im"
+import getCustomer from "app/customers/queries/getCustomer"
 
 const NewLocationPage: BlitzPage = () => {
   const router = useRouter()
   const customerId = useParam("customerId", "number")
+  const [customer] = useQuery(getCustomer, { id: customerId })
   const [createLocationMutation] = useMutation(createLocation)
+  const toast = useToast()
 
   return (
     <Flex w="auto" position="relative">
@@ -17,7 +20,7 @@ const NewLocationPage: BlitzPage = () => {
         justifyItems="left"
         alignItems="center"
         templateAreas={`'form submission'`}
-        gridTemplateColumns={"1fr 1fr 1fr"}
+        gridTemplateColumns={"1fr 2fr"}
         columnGap={3}
       >
         <GridItem area="form">
@@ -30,6 +33,7 @@ const NewLocationPage: BlitzPage = () => {
               // schema={CreateLocation}
               // initialValues={{}}
               onSubmit={async (values) => {
+                console.log(values)
                 try {
                   const location = await createLocationMutation({
                     ...values,
@@ -38,6 +42,11 @@ const NewLocationPage: BlitzPage = () => {
                   router.push(
                     Routes.ShowLocationPage({ customerId: customerId!, locationId: location.id })
                   )
+                  toast({
+                    title: `${customer.firstname} ${customer.lastname}`,
+                    description: "Successfully created",
+                    status: "success",
+                  })
                 } catch (error: any) {
                   console.error(error)
                   return {
