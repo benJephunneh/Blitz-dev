@@ -108,7 +108,7 @@ const Home: BlitzPage = () => {
 
   return (
     <>
-      <Box bg={useColorModeValue("gray.50", "gray.800")} w="100%" h={150}>
+      <Box bg={useColorModeValue("gray.50", "gray.800")}>
         <Image
           src="./Wakulla-River-banner2.jpg"
           h={200}

@@ -1,4 +1,4 @@
-import { FC, Suspense } from "react"
+import { Suspense } from "react"
 import { Link, BlitzPage, useMutation, Routes, useSession, RouteUrlObject } from "blitz"
 import { useCurrentUser } from "app/core/hooks/useCurrentUser"
 import logout from "app/auth/mutations/logout"
@@ -9,12 +9,11 @@ import {
   Flex,
   Heading,
   HStack,
-  Icon,
   Text,
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react"
-import SidebarLayout from "app/core/layouts/SidebarLayout"
+import PlainLayout from "app/core/layouts/PlainLayout"
 import { IconType } from "react-icons"
 import { FcConferenceCall, FcGlobe } from "react-icons/fc"
 import IconCard from "app/core/components/IconCard"
@@ -107,54 +106,56 @@ const Dashboard: BlitzPage = () => {
       <Box bg={useColorModeValue("gray.50", "gray.800")}>
         <Container as="main" maxWidth="container.sm" textAlign="center" py={{ base: 12, md: 20 }}>
           {isLoggedIn && (
-            <Heading size="2xl" mb={2}>
-              {currentUser?.username}
-            </Heading>
+            <>
+              <Heading size="2xl" mb={2}>
+                {currentUser?.username}
+              </Heading>
+              <Text fontSize="2xl" opacity="0.8">
+                Ride the effluent.
+              </Text>
+            </>
           )}
-
-          <Flex height="75vh" paddingY={20}>
-            <VStack width="full" height="full" padding={10} spacing={10} alignItems="flex-start">
-              <IconCard icon={FcConferenceCall} title="Customers" text="View list of customers" />
-              <IconCard icon={FcGlobe} title="Locations" text="View customer locations" />
-              {/*
-              <Suspense>
-                <UserInfo />
-              </Suspense>
-    */}
-            </VStack>
-            <VStack
-              width="full"
-              height="full"
-              padding={10}
-              spacing={10}
-              alignItems="flex-start"
-              background="gray.50"
-            ></VStack>
-          </Flex>
-          <footer>
-            <Suspense>
-              <HStack spacing={2}>
-                <Button as="a" href="https://github.com/benJephunneh/Blitz-dev">
-                  Github - Blitz-dev
-                </Button>
-                <Button as="a" href="https://www.apalacheeseptic.com/">
-                  Apalachee Backhoe
-                </Button>
-              </HStack>
-            </Suspense>
-          </footer>
-
-          <footer>
-            <a
-              href="https://blitzjs.com?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Powered by Blitz.js
-            </a>
-          </footer>
         </Container>
       </Box>
+
+      <Container as="main" maxW="container.lg" py={{ base: 12, md: 20 }}>
+        <Flex height="75vh" paddingY={20}>
+          <VStack width="full" height="full" padding={10} spacing={10} alignItems="flex-start">
+            <IconCard icon={FcConferenceCall} title="Customers" text="View list of customers" />
+            <IconCard icon={FcGlobe} title="Locations" text="View customer locations" />
+          </VStack>
+          <VStack
+            width="full"
+            height="full"
+            padding={10}
+            spacing={10}
+            alignItems="flex-start"
+            background="gray.50"
+          ></VStack>
+        </Flex>
+        <footer>
+          <Suspense>
+            <HStack spacing={2}>
+              <Button as="a" href="https://github.com/benJephunneh/Blitz-dev">
+                Github - Blitz-dev
+              </Button>
+              <Button as="a" href="https://www.apalacheeseptic.com/">
+                Apalachee Backhoe
+              </Button>
+            </HStack>
+          </Suspense>
+        </footer>
+
+        <footer>
+          <a
+            href="https://blitzjs.com?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Powered by Blitz.js
+          </a>
+        </footer>
+      </Container>
     </>
   )
 }
@@ -162,9 +163,9 @@ const Dashboard: BlitzPage = () => {
 Dashboard.suppressFirstRenderFlicker = true
 Dashboard.authenticate = { redirectTo: Routes.LoginPage() }
 Dashboard.getLayout = (page) => (
-  <SidebarLayout title="Dashboard" description="Home page for logged-in users">
+  <PlainLayout title="Dashboard" description="Home page for logged-in users">
     {page}
-  </SidebarLayout>
+  </PlainLayout>
 )
 
 export default Dashboard

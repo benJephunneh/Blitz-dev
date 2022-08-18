@@ -15,11 +15,9 @@ const PlainLayout: BlitzLayout<PlainLayoutProps> = ({ title, description, childr
       <Head>
         <title>{title}</title>
       </Head>
-      <Header title={title} />
 
-      <Box p={5} overflow="hidden">
-        {children}
-      </Box>
+      <Header title={title} />
+      {children}
     </>
   )
 }
